@@ -1,4 +1,5 @@
 import { ApiData } from './models/ApiData';
+import { RandomPick } from './components/RandomPick';
 
 // Fetch all countries from the countryapi.io
 const getData = async ():Promise<ApiData> => {
@@ -10,8 +11,11 @@ const getData = async ():Promise<ApiData> => {
 }
 
 export default async function Home() {
+  const apiData: ApiData = await getData();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {Object.keys(await getData()).length} countries loaded!
+      <p>{Object.keys(apiData).length} countries await you!</p>
+      <p>Here is a random one:</p>
+      <RandomPick data={ apiData } />
     </main>);
 }

@@ -16,7 +16,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+
+        <header className="p-5">
+          <h1 className="text-center">Next-geo: have fun with flags (and more)!</h1>
+        </header>
+
+        <main className="flex min-h-screen flex-col items-center">
+          {children}
+        </main>
+
+        <footer className="p-5">
+          <p className="text-center">Copyleft 2024 - Made with next.js and countryapi.io</p>
+        </footer>
+      </body>
     </html>
   );
 }

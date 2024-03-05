@@ -6,10 +6,11 @@ import { GameList } from './components/server/GameList';
 export default async function Home() {
   const apiData: ApiData = await getData();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <p>{Object.keys(apiData).length} countries await you!</p>
-      <p>Here is a random one:</p>
+    <>
+      <h2>{Object.keys(apiData).length} countries await you!</h2>
+      <h3>Here is a random one:</h3>
       <RandomPick data={ apiData } />
+      <h3>Pick a game:</h3>
       <GameList />
-    </main>);
+    </>);
 }

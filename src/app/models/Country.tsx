@@ -23,11 +23,14 @@ export class Country implements ICountry  {
             this.flag = object.flag;    
         }
     }
-    random(apiData: ApiData) {
-        const dataLen = Object.keys(apiData).length;
-        const random = Math.floor(Math.random() * dataLen);
-        const country = apiData[Object.keys(apiData)[random]];
+    random(apiData: ApiData, index = null) {
+        const country = apiData[Object.keys(apiData)[index ?? randomCountryIndex(apiData)]];
         const { name, capital, population, area, flag } = country;
         return new Country({name, capital, population, area, flag});
     }
+}
+
+export const randomCountryIndex = (apiData: ApiData) => {
+    const dataLen = Object.keys(apiData).length;
+    return Math.floor(Math.random() * dataLen);
 }

@@ -1,3 +1,7 @@
+import { ApiData } from "./ApiData";
+import { GameFlagsFlag } from "../funwith/flags/flag/GameComponent";
+import { GameFlagsCountry } from "../funwith/flags/country/GameComponent";
+
 const prefix: string = "Fun with ";
 enum Games {
     flags = 'flags',
@@ -14,6 +18,23 @@ const gamesVariants:Record<string, string[]> = {
     areas: ['Who is bigger?'],
     population: ['Who is bigger?'],
 };
+
+export interface IGameComponent {
+    data: ApiData;
+    setResult: Function;
+    setScore: Function;
+}
+
+export const gamesComponents = {
+    GameFlagsFlag,
+    GameFlagsCountry,
+    // GameCapitalsCapital,
+    // GameCapitalCountry,
+    // GameRegionsRegion,
+    // GameRegionsSubregion,  
+    // GameAreaBigger,
+    // GamePopulationBigger,  
+}
 
 export interface IGame {
     name: string;

@@ -6,6 +6,7 @@ export interface ICountry {
     population?: number;
     area?: number;
     flag?: { [key: string]: string };
+    region?: string;
 }
 
 export class Country implements ICountry  {
@@ -14,19 +15,21 @@ export class Country implements ICountry  {
     population;
     area;
     flag;
+    region;
     constructor(object?: ICountry) {
         if(object) {
             this.name = object.name;
             this.capital = object.capital;
             this.population = object.population;
             this.area = object.area;
-            this.flag = object.flag;    
+            this.flag = object.flag;
+            this.region = object.region;
         }
     }
     random(apiData: ApiData, index = null) {
         const country = apiData[Object.keys(apiData)[index ?? randomCountryIndex(apiData)]];
-        const { name, capital, population, area, flag } = country;
-        return new Country({name, capital, population, area, flag});
+        const { name, capital, population, area, flag, region } = country;
+        return new Country({name, capital, population, area, flag, region });
     }
 }
 

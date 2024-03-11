@@ -4,6 +4,7 @@ import { FlagSize } from '@/app/models/Flag';
 import { FlagPic } from '@/app/components/server/FlagPic';
 import { getRandomCountries } from '@/app/helpers/randomCountries';
 import { handleSubmitAnswer } from '@/app/helpers/handleSubmitAnswer';
+import { CheckIcon } from '@/app/components/server/CheckIcon';
 
 const GameComponent = (props: IGameComponent) => {
     const { data, setResult, setScore } = props;
@@ -20,21 +21,24 @@ const GameComponent = (props: IGameComponent) => {
             }
             <form onSubmit={(e) => handleSubmitAnswer(e, searchedName, setResult, setScore)}>
                 <fieldset>
-                    <legend className="p-4">What flag is this?</legend>
+                    <legend className="m-auto p-4">What flag is this?</legend>
                     {
                         shuffledCountries.map(({name}, i: number) =>
-                            <div key={i} className="p-2">
+                            <div key={i} className="choice">
                                 <input
                                     type="radio"
                                     name="answer"
                                     id={`answer-${i}`}
                                     value={name}
+                                    className="radio-fake hidden"
                                 />
-                                <label htmlFor={`answer-${i}`} className="pl-4">{name}</label>
+                                <label htmlFor={`answer-${i}`} className="w-80 m-2 p-2 flex items-center justify-center border-2 border-blue-600 rounded">
+                                    {name}
+                                </label>
                             </div>
                         ) 
                     }
-                    <input type="submit" value="Choose" className="block m-auto mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                    <input id="submitBtn" type="submit" value="Choose" className="block w-40 m-auto mt-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-2 px-4 rounded" />
                 </fieldset>
             </form>
         </>

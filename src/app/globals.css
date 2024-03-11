@@ -26,7 +26,6 @@ body {
 }
 
 .game {
-  /* border-radius: 100%; */
   border-top-left-radius: 70%;
   border-top-right-radius: 85%;
   border-bottom-left-radius: 75%;
@@ -70,7 +69,23 @@ body {
   transform: rotate(-2deg);  
 }
 
+.choice:hover label, .radio-fake:checked + label {
+  color: #f2f2f2;
+  background: rgb(37 99 235);
+}
 
+.right .radio-fake:checked + label {
+  background: rgb(22 163 74);
+  border-color: rgb(22 163 74);
+}
+.wrong .radio-fake:checked + label {
+  background: rgb(220 38 38);
+  border-color: rgb(220 38 38);
+}
+
+#submitBtn.disabled, #submitBtn.disabled:hover {
+  filter: grayscale();
+}
 
 @layer utilities {
   .text-balance {

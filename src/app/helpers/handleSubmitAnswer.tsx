@@ -1,12 +1,24 @@
-export const handleSubmitAnswer = (e, searchedName, setResult, setScore) => {
+import { FormEvent } from "react";
+
+export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, searchedName = '', setResult: Function, setScore: Function) => {
     e.preventDefault();
-    if(e.target.answer.value === searchedName) {
-        setResult(true);
-        setScore(prevState => prevState + 1);
-    }
-    else {
-        setResult(false);
-        setScore(0);
-    }
-    e.target.reset();
+    const form = e.target as HTMLFormElement;
+    const rightAnswer = form.answer.value === searchedName;
+    form.classList.add(rightAnswer ? 'right' : 'wrong');
+    const submitBtn = document.getElementById('submitBtn') as HTMLInputElement;
+    submitBtn.disabled = true;
+    submitBtn.classList.add('disabled');
+    setTimeout(() => {
+        form.className = "";
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('disabled');
+        setResult(rightAnswer);
+        if(rightAnswer) {
+            setScore((prevState:number) => prevState + 1);
+        }
+        else {
+            setScore(0);
+        }
+        form.reset();
+    }, 1850);
 }

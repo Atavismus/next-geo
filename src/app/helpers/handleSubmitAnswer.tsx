@@ -6,6 +6,9 @@ export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, searchedName =
     const rightAnswer = form.answer.value === searchedName;
     form.classList.add(rightAnswer ? 'right' : 'wrong');
     const submitBtn = document.getElementById('submitBtn') as HTMLInputElement;
+    const score = document.getElementById('score') as HTMLDivElement;
+    score.className = "";
+    score.classList.add(`animTo${rightAnswer ? 'Right' : 'Wrong'}`);
     submitBtn.disabled = true;
     submitBtn.classList.add('disabled');
     setTimeout(() => {
@@ -20,5 +23,5 @@ export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, searchedName =
             setScore(0);
         }
         form.reset();
-    }, 1850);
+    }, 1000);
 }

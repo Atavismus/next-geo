@@ -71,20 +71,58 @@ body {
 
 .choice:hover label, .radio-fake:checked + label {
   color: #f2f2f2;
-  background: rgb(37 99 235);
+  background: rgb(37, 99, 235);
 }
 
 .right .radio-fake:checked + label {
-  background: rgb(22 163 74);
-  border-color: rgb(22 163 74);
+  background: rgb(22, 163, 74);
+  border-color: rgb(22, 163, 74);
 }
 .wrong .radio-fake:checked + label {
-  background: rgb(220 38 38);
-  border-color: rgb(220 38 38);
+  background: rgb(220, 38, 38);
+  border-color: rgb(220, 38, 38);
 }
 
 #submitBtn.disabled, #submitBtn.disabled:hover {
   filter: grayscale();
+}
+
+@keyframes animToRight {
+  100%  {color: rgb(22, 163, 74);}
+}
+
+@keyframes animToWrong {
+  100%  {color: rgb(220, 38, 38);}
+}
+
+@keyframes resetFromRight {
+  0%  {color: rgb(22, 163, 74);}
+  100%  {color: #000000;}
+}
+
+@keyframes resetFromWrong {
+  0%  {color: rgb(220, 38, 38);}
+  100%  {color: #000000;}
+}
+
+#score {
+  animation-fill-mode: forwards!important;  
+}
+
+#score.animToRight {
+  animation: animToRight 1000ms;
+}
+
+#score.animToWrong {
+  animation: animToWrong 1000ms;
+}
+
+#score.resetFromRight {
+  animation: resetFromRight 1000ms;
+}
+
+#score.resetFromWrong {
+  animation: resetFromWrong 1000ms;
 }
 
 @layer utilities {

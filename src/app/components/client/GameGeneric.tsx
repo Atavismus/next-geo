@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ApiData } from '../../models/ApiData';
 import { gamesComponents } from '../../models/Game';
 import { GameTitle } from './GameTitle';
-import { GameResult } from './GameResult';
+import { GameScore } from './GameScore';
 
 const GameGeneric = (props: ApiData) => {
     const { data } = props;
@@ -17,7 +17,7 @@ const GameGeneric = (props: ApiData) => {
         <>
             <GameTitle game={pathParts[2]} variant={pathParts[3]} />
             <GameToRender data={data} setResult={setResult} setScore={setScore}/>
-            <GameResult result={result} score={score} />
+            <GameScore result={result} score={score} />
         </>
     );
 }

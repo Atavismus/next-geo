@@ -3,6 +3,13 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
+:root {
+  --blue: rgb(37, 99, 235);
+  --green: rgb(22, 163, 74);
+  --red: rgb(220, 38, 38);
+  --white: #f2f2f2;
+}
+
 body {
   background: url("../../public/bricks.png") repeat;
   padding-bottom: 5%;
@@ -14,7 +21,7 @@ body {
 }
 
 #whiteboard {
-  background-color: #f2f2f2;
+  background-color: var(--white);
   width: 90%;
   height: 90%;
   margin: auto;
@@ -71,16 +78,16 @@ body {
 
 .choice:hover label, .radio-fake:checked + label {
   color: #f2f2f2;
-  background: rgb(37, 99, 235);
+  background: var(--blue);
 }
 
 .right .radio-fake:checked + label {
-  background: rgb(22, 163, 74);
-  border-color: rgb(22, 163, 74);
+  background: var(--green);
+  border-color: var(--green);
 }
 .wrong .radio-fake:checked + label {
-  background: rgb(220, 38, 38);
-  border-color: rgb(220, 38, 38);
+  background: var(--red);
+  border-color: var(--red);
 }
 
 #submitBtn.disabled, #submitBtn.disabled:hover {
@@ -88,20 +95,20 @@ body {
 }
 
 @keyframes animToRight {
-  100%  {color: rgb(22, 163, 74);}
+  100%  {color: var(--green);}
 }
 
 @keyframes animToWrong {
-  100%  {color: rgb(220, 38, 38);}
+  100%  {color: var(--red);}
 }
 
 @keyframes resetFromRight {
-  0%  {color: rgb(22, 163, 74);}
+  0%  {color: var(--green);}
   100%  {color: #000000;}
 }
 
 @keyframes resetFromWrong {
-  0%  {color: rgb(220, 38, 38);}
+  0%  {color: var(--red);}
   100%  {color: #000000;}
 }
 

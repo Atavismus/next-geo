@@ -5,10 +5,11 @@ interface IFlagPic {
     size: FlagSize;
     url: string;
     name: string;
+    className?: string;
 }
 
 const FlagPic = (props: IFlagPic) => {
-    const { size, url, name } = props;
+    const { size, url, name, className } = props;
     const { width, height } = new Flag(size).getSizeSpec();
     return (
         <>
@@ -18,6 +19,7 @@ const FlagPic = (props: IFlagPic) => {
                     width={width}
                     height={height}
                     alt={name}
+                    className={className}
                 />
             }
         </>

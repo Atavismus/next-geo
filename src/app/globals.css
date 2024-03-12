@@ -76,22 +76,23 @@ body {
   transform: rotate(-2deg);  
 }
 
-.choice:hover label, .radio-fake:checked + label {
+/*Choices are text*/
+.choiceText:hover label, .choiceText .radio-fake:checked + label {
   color: #f2f2f2;
   background: var(--blue);
 }
 
-.right .radio-fake:checked + label {
+.right .choiceText .radio-fake:checked + label {
   background: var(--green);
   border-color: var(--green);
 }
-.wrong .radio-fake:checked + label {
+.wrong .choiceText .radio-fake:checked + label {
   background: var(--red);
   border-color: var(--red);
 }
 
 #submitBtn.disabled, #submitBtn.disabled:hover {
-  filter: grayscale();
+  filter: grayscale(1);
 }
 
 @keyframes animToRight {
@@ -112,6 +113,42 @@ body {
   100%  {color: #000000;}
 }
 
+/*Choices are flags*/
+.check {
+  margin-left: -55px;
+  animation-delay: 350ms!important;
+  animation-fill-mode: forwards;
+}
+
+.choiceFlag:hover .check, .choiceFlag .radio-fake:checked + label > svg {
+  display: block;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+.choiceFlag .radio-fake:checked + label > .check path {
+  stroke: rgb(37 99 235);
+}
+
+.right .check path {
+  stroke: rgb(22 163 74)!important;
+}
+.wrong .check path {
+  stroke: rgb(220 38 38)!important;
+}
+
+.right .check {
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1);
+}
+.wrong .check {
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1);
+}
+
+/*Scoring*/
 #score {
   animation-fill-mode: forwards!important;  
 }

@@ -24,7 +24,7 @@ const GameComponent = (props: IGameComponent) => {
                     <legend className="m-auto p-4">What flag is this?</legend>
                     {
                         shuffledCountries.map(({name}, i: number) =>
-                            <div key={i} className="choice">
+                            <div key={i} className="choiceText">
                                 <input
                                     type="radio"
                                     name="answer"

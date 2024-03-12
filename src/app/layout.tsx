@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div id="whiteboard">
           <header className="pt-10">
-            <Link href="/"><h1 className="text-center marker text-blue-600 text-5xl font-black small-caps"><span className="uppercase text-red-600">Fun</span> with GEO</h1></Link>
+            <Link href="/"><h1 className="text-center marker text-blue-600 text-5xl font-black small-caps cursor-pointer"><span className="uppercase text-red-600">Fun</span> with GEO</h1></Link>
           </header>
 
           <main className="flex min-h-screen flex-col items-center">
@@ -28,7 +28,7 @@ export default function RootLayout({
           </main>
 
           <footer className="p-5">
-            <p className="text-center">Copyleft 2024 - Made with <a href="https://nextjs.org/" target="blank" className="text-blue-600">next.js</a> and <a href="https://countryapi.io/" target="blank" className="text-blue-600">countryapi.io</a></p>
+            <p className="text-center">Copyleft 2024 - Made with <a href="https://nextjs.org/" target="blank" className="text-blue-600 cursor-pointer">next.js</a> and <a href="https://countryapi.io/" target="blank" className="text-blue-600 cursor-pointer">countryapi.io</a></p>
           </footer>
         </div>
       </body>

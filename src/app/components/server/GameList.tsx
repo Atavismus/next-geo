@@ -6,7 +6,7 @@ const GameList = () => {
     return variants.map((variant, i) => {
       const url: string = `/funwith/${game}/${variant.split(' ').pop()?.replace('?', '')}`;
       return (
-        <p key={i} className="text-blue-600">{variants.length > 1 ? '*' : ''}<Link href={url} className="hover:underline">{variant}</Link></p>
+        <p key={i} className="text-blue-600">{variants.length > 1 ? '*' : ''}<Link href={url} className="hover:underline cursor-pointer">{variant}</Link></p>
       );
     });
   }

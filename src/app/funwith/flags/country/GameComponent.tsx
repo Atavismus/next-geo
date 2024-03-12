@@ -18,7 +18,7 @@ const GameComponent = (props: IGameComponent) => {
                     {
                         shuffledCountries.map(({name, flag}, i: number) => {
                             return (
-                                <div key={i} className="choiceFlag relative p-2 flex space-x-2 justify-center">
+                                <div key={i} className="choiceFlag relative p-2 flex justify-center">
                                     <input
                                         type="radio"
                                         name="answer"
@@ -26,7 +26,7 @@ const GameComponent = (props: IGameComponent) => {
                                         value={name}
                                         className="radio-fake hidden"
                                     />
-                                    <label htmlFor={`answer-${i}`} className="flex items-center">
+                                    <label htmlFor={`answer-${i}`} className="flex items-center cursor-pointer">
                                         <CheckIcon className="check absolute hidden" />
                                         { flag && 
                                             <FlagPic
@@ -40,7 +40,7 @@ const GameComponent = (props: IGameComponent) => {
                             )
                         })
                     }
-                    <input id="submitBtn" type="submit" value="Choose" className="block w-40 m-auto mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                    <input id="submitBtn" type="submit" value="Choose" className="block w-40 m-auto mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer" />
                 </fieldset>
             </form>
         </>

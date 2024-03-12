@@ -14,7 +14,7 @@ const RandomPick = (props: ApiData) => {
         setRerender(!rerender);
     }
     return (
-        <div className="game border-4 border-blue-600 border-dashed px-12 py-8" onClick={handleClick}>
+        <div className="game border-4 border-blue-600 border-dashed px-12 py-8 cursor-pointer" onClick={handleClick}>
             <div className="pb-5 font-black text-center">Random pick:</div>
             { name && flag && 
                 <div className="grid grid-flow-col auto-cols-max items-end">

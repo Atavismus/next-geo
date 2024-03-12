@@ -4,7 +4,6 @@ import { FlagSize } from '@/app/models/Flag';
 import { FlagPic } from '@/app/components/server/FlagPic';
 import { getRandomCountries } from '@/app/helpers/randomCountries';
 import { handleSubmitAnswer } from '@/app/helpers/handleSubmitAnswer';
-import { CheckIcon } from '@/app/components/server/CheckIcon';
 
 const GameComponent = (props: IGameComponent) => {
     const { data, setResult, setScore } = props;
@@ -12,16 +11,17 @@ const GameComponent = (props: IGameComponent) => {
     const { name: searchedName, flag: searchedFlag} = searchedCountry;
     return (
         <>
+            <h3 className="m-5 font-black text-2xl"> ~ What flag is this? ~</h3>
             { searchedName && searchedFlag && 
                 <FlagPic
                     size={FlagSize.large}
                     url={searchedFlag.large}
                     name="?"
+                    className="mt-3 mb-6"
                 />
             }
             <form onSubmit={(e) => handleSubmitAnswer(e, searchedName, setResult, setScore)}>
                 <fieldset>
-                    <legend className="m-auto p-4">What flag is this?</legend>
                     {
                         shuffledCountries.map(({name}, i: number) =>
                             <div key={i} className="choiceText">

@@ -20,6 +20,26 @@ body {
   font-variant: small-caps;
 }
 
+#geo {
+  position: relative;
+}
+
+#geo.crossed:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: -10%;
+  width: 120%;
+  height: 5px;
+  background-color: var(--red);
+  transform: rotate(175deg);
+  border-top-left-radius: 55%;
+  border-top-right-radius: 85%;
+  border-bottom-left-radius: 79%;
+  border-bottom-right-radius: 66%;
+}
+
 #whiteboard {
   background-color: var(--white);
   width: 90%;

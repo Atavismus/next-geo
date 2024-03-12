@@ -12,9 +12,9 @@ const GameComponent = (props: IGameComponent) => {
     const { name: searchedName } = searchedCountry;
     return (
         <>
+            <h3 className="m-5 font-black text-2xl"> ~ What is the flag of {searchedName}? ~</h3>
             <form onSubmit={(e) => handleSubmitAnswer(e, searchedName, setResult, setScore)}>
                 <fieldset>
-                    <legend className="p-4">What is the flag of {searchedName}?</legend>
                     {
                         shuffledCountries.map(({name, flag}, i: number) => {
                             return (

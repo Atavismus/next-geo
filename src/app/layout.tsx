@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div id="whiteboard">
           <header className="pt-10">
-            <Link href="/"><h1 className="text-center marker text-blue-600 text-5xl font-black small-caps cursor-pointer"><span className="uppercase text-red-600">Fun</span> with GEO</h1></Link>
+            <Link href="/"><h1 className="text-center marker text-blue-600 text-5xl font-black small-caps cursor-pointer"><span className="uppercase text-red-600">Fun</span> with <span id="geo">Geo</span></h1></Link>
           </header>
 
           <main className="flex min-h-screen flex-col items-center">

@@ -26,12 +26,12 @@ const GameComponent = (props: IGameComponent) => {
                                         value={name}
                                         className="radio-fake hidden"
                                     />
-                                    <label htmlFor={`answer-${i}`} className="flex items-center cursor-pointer">
+                                    <label htmlFor={`answer-${i}`} className="flex items-center w-3/5 cursor-pointer">
                                         <CheckIcon className="check absolute hidden" />
                                         { flag && 
                                             <FlagPic
-                                                size={FlagSize.medium}
-                                                url={flag.medium}
+                                                size={FlagSize.large}
+                                                url={flag.large}
                                                 name="?"
                                             />
                                         }

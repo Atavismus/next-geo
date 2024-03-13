@@ -8,8 +8,8 @@ import { CheckIcon } from '@/app/components/server/CheckIcon';
 
 const GameMain = (props: ApiData) => {
     const { data, setResult, setScore, gameInfos } = props;
-    const { shuffledCountries, searchedCountry } = getRandomCountries(data);
-    const { choices, searchedProp, startFlag, title, titleProp } = gameInfos;
+    const { choices, searchedProp, startFlag, title, titleProp, uniqBy } = gameInfos;
+    const { shuffledCountries, searchedCountry } = getRandomCountries(data, undefined, uniqBy);
     const { name: searchedName, flag: searchedFlag } = searchedCountry;
     const rightAnswer = searchedCountry.get(searchedProp);
     const formattedTitle = title.includes('@titleProp@') ? title.replace('@titleProp@', searchedCountry.get(titleProp)) : title;

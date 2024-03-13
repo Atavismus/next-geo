@@ -22,6 +22,7 @@ export interface IGameVariant {
     titleProp: string | null;
     startFlag: boolean;
     choices: string;
+    uniqBy: string | null
 }
 /**
  * NB: name is the name of the country
@@ -33,14 +34,16 @@ export const gameData:Record<ValidGameKeys, Record<string, IGameVariant>> = {
             title: 'What flag is this?',
             titleProp: null,
             startFlag: true,
-            choices: 'text'
+            choices: 'text',
+            uniqBy: null
         },
         country: {
             searchedProp: 'name',
             title: 'What is the flag of @titleProp@?',
             titleProp: 'name',
             startFlag: false,
-            choices: 'flag'
+            choices: 'flag',
+            uniqBy: null
         }
     },
     capitals: {
@@ -49,16 +52,36 @@ export const gameData:Record<ValidGameKeys, Record<string, IGameVariant>> = {
             title: 'What is the capital of @titleProp@?',
             titleProp: 'name',
             startFlag: false,
-            choices: 'text'    
+            choices: 'text',
+            uniqBy: null 
         },
         country: {
             searchedProp: 'name',
             title: '@titleProp@ is the capital of?',
             titleProp: 'capital',
             startFlag: false,
-            choices: 'text'    
-        }
-    }   
+            choices: 'text',
+            uniqBy: null    
+        },
+    },
+    regions: {
+        region: {
+            searchedProp: 'region',
+            title: 'Which region is @titleProp@ in?',
+            titleProp: 'name',
+            startFlag: false,
+            choices: 'text',
+            uniqBy: 'region'
+        },
+        subregion: {
+            searchedProp: 'subregion',
+            title: 'Which subregion is @titleProp@ in?',
+            titleProp: 'name',
+            startFlag: false,
+            choices: 'text',
+            uniqBy: 'subregion'
+        },
+    } 
 }
 
 export interface IGame {

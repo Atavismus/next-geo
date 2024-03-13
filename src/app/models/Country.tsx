@@ -7,6 +7,7 @@ export interface ICountry {
     area?: number;
     flag?: { [key: string]: string };
     region?: string;
+    subregion?: string;
 }
 
 export class Country implements ICountry  {
@@ -16,6 +17,7 @@ export class Country implements ICountry  {
     area;
     flag;
     region;
+    subregion;
     constructor(object?: ICountry) {
         if(object) {
             this.name = object.name;
@@ -24,6 +26,7 @@ export class Country implements ICountry  {
             this.area = object.area;
             this.flag = object.flag;
             this.region = object.region;
+            this.subregion = object.subregion;
         }
     }
     public get<K extends keyof ICountry>(propertyName: K): ICountry[K] {
@@ -31,8 +34,8 @@ export class Country implements ICountry  {
     }
     public random(apiData: ApiData, index = null) {
         const country = apiData[Object.keys(apiData)[index ?? randomCountryIndex(apiData)]];
-        const { name, capital, population, area, flag, region } = country;
-        return new Country({name, capital, population, area, flag, region });
+        const { name, capital, population, area, flag, region, subregion } = country;
+        return new Country({name, capital, population, area, flag, region, subregion });
     }
 }
 

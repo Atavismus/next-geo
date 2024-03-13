@@ -42,7 +42,23 @@ export const gameData:Record<ValidGameKeys, Record<string, IGameVariant>> = {
             startFlag: false,
             choices: 'flag'
         }
-    },   
+    },
+    capitals: {
+        capital: {
+            searchedProp: 'capital',
+            title: 'What is the capital of @titleProp@?',
+            titleProp: 'name',
+            startFlag: false,
+            choices: 'text'    
+        },
+        country: {
+            searchedProp: 'name',
+            title: '@titleProp@ is the capital of?',
+            titleProp: 'capital',
+            startFlag: false,
+            choices: 'text'    
+        }
+    }   
 }
 
 export interface IGame {

@@ -26,7 +26,10 @@ export class Country implements ICountry  {
             this.region = object.region;
         }
     }
-    random(apiData: ApiData, index = null) {
+    public get<K extends keyof ICountry>(propertyName: K): ICountry[K] {
+        return this[propertyName] as ICountry[K];
+    }
+    public random(apiData: ApiData, index = null) {
         const country = apiData[Object.keys(apiData)[index ?? randomCountryIndex(apiData)]];
         const { name, capital, population, area, flag, region } = country;
         return new Country({name, capital, population, area, flag, region });

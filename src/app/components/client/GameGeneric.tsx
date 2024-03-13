@@ -2,8 +2,9 @@
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { ApiData } from '../../models/ApiData';
-import { gamesComponents } from '../../models/Game';
+import { Game, ValidGameKeys } from '../../models/Game';
 import { GameTitle } from './GameTitle';
+import { GameMain } from './GameMain';
 import { GameScore } from './GameScore';
 
 const GameGeneric = (props: ApiData) => {
@@ -11,13 +12,12 @@ const GameGeneric = (props: ApiData) => {
     const [result, setResult] = useState(null);
     const [score, setScore] = useState(0);
     const pathParts = usePathname().split('/');
-    const componentName = `Game${pathParts[2].charAt(0).toUpperCase()}${pathParts[2].slice(1)}${pathParts[3].charAt(0).toUpperCase()}${pathParts[3].slice(1)}`;
-    const GameToRender = gamesComponents[componentName];
+    const gameInfos = new Game({name: pathParts[2] as ValidGameKeys, variant: pathParts[3]}).getInfos();
     return (
         <>
-            <GameTitle game={pathParts[2]} variant={pathParts[3]} />
-            <GameToRender data={data} setResult={setResult} setScore={setScore}/>
-            <GameScore result={result} score={score} />
+            <GameTitle game={pathParts[2]} variant={pathParts[3]}/>
+            <GameMain data={data} setResult={setResult} setScore={setScore} gameInfos={gameInfos}/>
+            <GameScore result={result} score={score}/>
         </>
     );
 }

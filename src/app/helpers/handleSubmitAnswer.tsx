@@ -1,22 +1,22 @@
 import { FormEvent } from "react";
 
-export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, searchedName = '', setResult: Function, setScore: Function) => {
+export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, rightAnswer = '', setResult: Function, setScore: Function) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const rightAnswer = form.answer.value === searchedName;
-    form.classList.add(rightAnswer ? 'right' : 'wrong');
+    const correct = form.answer.value === rightAnswer;
+    form.classList.add(correct ? 'right' : 'wrong');
     const submitBtn = document.getElementById('submitBtn') as HTMLInputElement;
     const score = document.getElementById('score') as HTMLDivElement;
     score.className = "";
-    score.classList.add(`animTo${rightAnswer ? 'Right' : 'Wrong'}`);
+    score.classList.add(`animTo${correct ? 'Right' : 'Wrong'}`);
     submitBtn.disabled = true;
     submitBtn.classList.add('disabled');
     setTimeout(() => {
         form.className = "";
         submitBtn.disabled = false;
         submitBtn.classList.remove('disabled');
-        setResult(rightAnswer);
-        if(rightAnswer) {
+        setResult(correct);
+        if(correct) {
             setScore((prevState:number) => prevState + 1);
         }
         else {

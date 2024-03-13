@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from "react";
 interface IGameTitle {
-    result: boolean;
+    result: boolean | null;
     score: number;
 }
 const GameScore = (props: IGameTitle) => {

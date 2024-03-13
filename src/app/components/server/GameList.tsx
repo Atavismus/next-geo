@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Game, getAllGamesName } from '../../models/Game';
+import { Game, getAllGamesName, ValidGameKeys } from '../../models/Game';
 
 const GameList = () => {
   const renderGameVariants = (game: string, variants: string[]) => {
@@ -14,12 +14,12 @@ const GameList = () => {
   return (
     <div className="grid grid-cols-2 gap-4">
       { games.map((game, i) => {
-        const country = new Game({ name: game });
+        const currentGame = new Game({ name: game as ValidGameKeys });
         return (
           <div key={i} className="game border-4 border-blue-600 p-8">
             <>
-              { country.getName() }:
-              { renderGameVariants(game, country.variants) }
+              { currentGame.getName() }:
+              { renderGameVariants(game, currentGame.variants) }
             </>
           </div>
         );

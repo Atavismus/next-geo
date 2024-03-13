@@ -1,7 +1,3 @@
-import { ApiData } from "./ApiData";
-import { GameFlagsFlag } from "../funwith/flags/flag/GameComponent";
-import { GameFlagsCountry } from "../funwith/flags/country/GameComponent";
-
 const prefix: string = "Fun with ";
 enum Games {
     flags = 'flags',
@@ -10,8 +6,9 @@ enum Games {
     areas = 'areas',
     population = 'population',
 }
+export type ValidGameKeys = typeof Games[keyof typeof Games];
 
-const gamesVariants:Record<string, string[]> = {
+const gamesVariants:Record<ValidGameKeys, string[]> = {
     flags: ['Guess the flag', 'Guess the country'],
     capitals: ['Guess the capital', 'Guess the country'],
     regions: ['Guess the region', 'Guess the subregion'],
@@ -19,47 +16,57 @@ const gamesVariants:Record<string, string[]> = {
     population: ['Who is bigger?'],
 };
 
-export interface IGameComponent {
-    data: ApiData;
-    setResult: Function;
-    setScore: Function;
+export interface IGameVariant {
+    searchedProp: string;
+    title: string;
+    titleProp: string | null;
+    startFlag: boolean;
+    choices: string;
 }
-
-export const gamesComponents = {
-    GameFlagsFlag,
-    GameFlagsCountry,
-    // GameCapitalsCapital,
-    // GameCapitalCountry,
-    // GameRegionsRegion,
-    // GameRegionsSubregion,  
-    // GameAreaBigger,
-    // GamePopulationBigger,  
+/**
+ * NB: name is the name of the country
+ */
+export const gameData:Record<ValidGameKeys, Record<string, IGameVariant>> = {
+    flags: {
+        flag: {
+            searchedProp: 'name',
+            title: 'What flag is this?',
+            titleProp: null,
+            startFlag: true,
+            choices: 'text'
+        },
+        country: {
+            searchedProp: 'name',
+            title: 'What is the flag of @titleProp@?',
+            titleProp: 'name',
+            startFlag: false,
+            choices: 'flag'
+        }
+    },   
 }
 
 export interface IGame {
-    name: string;
+    name: ValidGameKeys;
     variants?: string[];
-    // icon: string;
-    // desc: string;
+    variant?: string;
 }
 
 export class Game implements IGame {
     name;
-    variants;
-    // icon;
-    // desc;
+    variants; // available variants
+    variant;
     constructor(object: IGame) {
       this.name = object.name;
       this.variants = gamesVariants[object.name];
-    //   this.icon = object.icon;
-    //   this.desc = object.desc;
+      this.variant = object.variant;
+
     }
     getName(): string {
       return `${prefix + this.name}`;
     }
-    // getVariants(): string[] {
-    //     return gamesVariants[this.name];
-    //   }
+    getInfos(variant = this.variant): IGameVariant {
+        return gameData[this.name][variant as string];
+    }
 }
 
 export const getAllGamesName = () => {

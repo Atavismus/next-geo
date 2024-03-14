@@ -1,13 +1,12 @@
 import { ApiData } from "../models/ApiData";
-import { Country, randomCountryIndex } from "../models/Country";
+import { Country, ICountry, randomCountryIndex } from "../models/Country";
 
 interface IGetRandomCountries {
-    shuffledCountries: Country[];
-    searchedCountry: Country;    
+    shuffledCountries: Country[] | null;
+    searchedCountry: Country | null;    
 }
 
-
-const isUniqBy = (prop: string, data: ApiData, randomCountriesIndex: number[], countryIndex: number): boolean => {
+const isUniqBy = <K extends keyof ICountry>(prop: K, data: ApiData, randomCountriesIndex: number[], countryIndex: number): boolean => {
   const randomCountries = [];
   const ranCountryToCompare = new Country().random(data, countryIndex);
   const len = randomCountriesIndex.length;
@@ -16,14 +15,13 @@ const isUniqBy = (prop: string, data: ApiData, randomCountriesIndex: number[], c
   }
   for (let i: number = 0; i < len; i++) {
     if(randomCountries[i].get(prop) === ranCountryToCompare.get(prop)) {
-      console.log("là")
       return false;
     }
   }
 return true;
 }
 // TODO: deal with difficulty
-export const getRandomCountries = (data:ApiData, difficulty = 3, uniqBy = null): IGetRandomCountries => {
+export const getRandomCountries = (data:ApiData, difficulty = 3, uniqBy = null, sortBy = null): IGetRandomCountries => {
     const randomCountriesIndex: number[] = [];
     for (let i: number = 0; i < difficulty; i++) {
         let ran: number = randomCountryIndex(data);
@@ -46,9 +44,16 @@ export const getRandomCountries = (data:ApiData, difficulty = 3, uniqBy = null):
         // TODO: we should deal with not asking twice the same country
         randomCountries.push(new Country().random(data, randomCountriesIndex[i]));
     }
-    const searchedCountry: Country = randomCountries[0];
-    const shuffledCountries: Country[] = randomCountries.sort(() => Math.random() - 0.5);
-    console.log(shuffledCountries)
-    console.log(searchedCountry)
-    return { shuffledCountries, searchedCountry };
+
+    const countries: IGetRandomCountries = {
+      searchedCountry: null,
+      shuffledCountries: null
+    }
+    if(sortBy) {
+      randomCountries.sort((a, b) => b[sortBy] - a[sortBy]);
+
+    }
+    countries.searchedCountry = randomCountries[0]; 
+    countries.shuffledCountries = randomCountries.sort(() => Math.random() - 0.5);
+    return { ...countries };
 }

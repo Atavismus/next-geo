@@ -8,21 +8,15 @@ enum Games {
 }
 export type ValidGameKeys = typeof Games[keyof typeof Games];
 
-const gamesVariants:Record<ValidGameKeys, string[]> = {
-    flags: ['Guess the flag', 'Guess the country'],
-    capitals: ['Guess the capital', 'Guess the country'],
-    regions: ['Guess the region', 'Guess the subregion'],
-    areas: ['Who is bigger?'],
-    population: ['Who is bigger?'],
-};
-
 export interface IGameVariant {
-    searchedProp: string;
     title: string;
-    titleProp: string | null;
-    startFlag: boolean;
-    choices: string;
-    uniqBy: string | null
+    searchedProp: string;
+    question: string;
+    questionProp?: string;
+    startFlag?: boolean;
+    flagChoices?: boolean;
+    propToDisplay?: string | null;// in choices buttons
+    uniqBy?: string | null;
 }
 /**
  * NB: name is the name of the country
@@ -30,73 +24,64 @@ export interface IGameVariant {
 export const gameData:Record<ValidGameKeys, Record<string, IGameVariant>> = {
     flags: {
         flag: {
+            title: "Guess the flag",
             searchedProp: 'name',
-            title: 'What flag is this?',
-            titleProp: null,
-            startFlag: true,
-            choices: 'text',
-            uniqBy: null
+            question: 'What flag is this?',
+            startFlag: true
         },
         country: {
+            title: "Guess the country",
             searchedProp: 'name',
-            title: 'What is the flag of @titleProp@?',
-            titleProp: 'name',
-            startFlag: false,
-            choices: 'flag',
-            uniqBy: null
+            question: 'What is the flag of @questionProp@?',
+            questionProp: 'name',
+            flagChoices: true
         }
     },
     capitals: {
         capital: {
+            title: "Guess the capital",
             searchedProp: 'capital',
-            title: 'What is the capital of @titleProp@?',
-            titleProp: 'name',
-            startFlag: false,
-            choices: 'text',
-            uniqBy: null 
+            question: 'What is the capital of @questionProp@?',
+            questionProp: 'name'
         },
         country: {
+            title: "Guess the country",
             searchedProp: 'name',
-            title: '@titleProp@ is the capital of?',
-            titleProp: 'capital',
-            startFlag: false,
-            choices: 'text',
-            uniqBy: null    
+            question: '@questionProp@ is the capital of?',
+            questionProp: 'capital'
         },
     },
     regions: {
         region: {
+            title: "Guess the region",
             searchedProp: 'region',
-            title: 'Which region is @titleProp@ in?',
-            titleProp: 'name',
-            startFlag: false,
-            choices: 'text',
+            question: 'Which region is @questionProp@ in?',
+            questionProp: 'name',
             uniqBy: 'region'
         },
         subregion: {
+            title: "Guess the subregion",
             searchedProp: 'subregion',
-            title: 'Which subregion is @titleProp@ in?',
-            titleProp: 'name',
-            startFlag: false,
-            choices: 'text',
+            question: 'Which subregion is @questionProp@ in?',
+            questionProp: 'name',
             uniqBy: 'subregion'
         },
-    } 
+    },
 }
 
 export interface IGame {
     name: ValidGameKeys;
-    variants?: string[];
-    variant?: string;
+    variants?: Record<string, IGameVariant> | null;
+    variant?: string | null;
 }
 
 export class Game implements IGame {
     name;
-    variants; // available variants
-    variant;
+    variants?; // available variants with all infos from gameData
+    variant?; // current variant key
     constructor(object: IGame) {
       this.name = object.name;
-      this.variants = gamesVariants[object.name];
+      this.variants = object.variants;
       this.variant = object.variant;
 
     }
@@ -106,9 +91,4 @@ export class Game implements IGame {
     getInfos(variant = this.variant): IGameVariant {
         return gameData[this.name][variant as string];
     }
-}
-
-export const getAllGamesName = () => {
-    const games = Object.keys(Games);
-    return games.map(el => el);
 }

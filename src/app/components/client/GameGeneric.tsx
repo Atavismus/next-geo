@@ -12,7 +12,7 @@ const GameGeneric = (props: ApiData) => {
     const [result, setResult] = useState(null);
     const [score, setScore] = useState(0);
     const pathParts = usePathname().split('/');
-    const gameInfos = new Game({name: pathParts[2] as ValidGameKeys, variant: pathParts[3]}).getInfos();
+    const gameInfos = new Game({name: pathParts[2] as ValidGameKeys, variants: null, variant: pathParts[3]}).getInfos();
     return (
         <>
             <GameTitle game={pathParts[2]} variant={pathParts[3]}/>

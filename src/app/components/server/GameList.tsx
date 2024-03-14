@@ -1,29 +1,34 @@
 import Link from 'next/link';
-import { Game, getAllGamesName, ValidGameKeys } from '../../models/Game';
+import { Game, gameData, IGameVariant, ValidGameKeys } from '../../models/Game';
 
 const GameList = () => {
-  const renderGameVariants = (game: string, variants: string[]) => {
-    return variants.map((variant, i) => {
-      const url: string = `/funwith/${game}/${variant.split(' ').pop()?.replace('?', '')}`;
+  const renderGameVariants = (game: Game) => {
+    const variants = game.variants as Record<string, IGameVariant>;
+    return Object.entries(variants).map(([keyVariant, valueVariant], i) => {
+      const url: string = `/funwith/${game.name}/${keyVariant}`;
       return (
-        <p key={i} className="text-blue-600">{variants.length > 1 ? '*' : ''}<Link href={url} className="hover:underline cursor-pointer">{variant}</Link></p>
+        <p key={i} className="text-blue-600">{Object.keys(variants).length > 1 ? '*' : ''}
+          <Link href={url} className="hover:underline cursor-pointer">{valueVariant.title}</Link>
+        </p>
       );
     });
   }
-  const games = getAllGamesName();
+
   return (
     <div className="grid grid-cols-2 gap-4">
-      { games.map((game, i) => {
-        const currentGame = new Game({ name: game as ValidGameKeys });
-        return (
-          <div key={i} className="game border-4 border-blue-600 p-8">
-            <>
-              { currentGame.getName() }:
-              { renderGameVariants(game, currentGame.variants) }
-            </>
-          </div>
-        );
-      })}
+      {
+        Object.entries(gameData).map(([keyGame, valueVariants], i) => {
+          const game = new Game({ name: keyGame as ValidGameKeys, variants: valueVariants});
+          return (
+            <div key={i} className="game border-4 border-blue-600 p-8">
+              <>
+                {game.getName()}
+                {renderGameVariants(game)}
+              </>
+            </div>
+          );
+        })
+      }
     </div>
   );
 }

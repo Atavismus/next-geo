@@ -1,30 +1,30 @@
 import { ApiData } from "./ApiData";
 
 export interface ICountry {
-    name?: string;
-    capital?: string;
-    population?: number;
     area?: number;
+    capital?: string;
     flag?: { [key: string]: string };
+    name?: string;
+    population?: number;
     region?: string;
     subregion?: string;
 }
 
 export class Country implements ICountry  {
-    name;
-    capital;
-    population;
     area;
+    capital;
     flag;
+    name;
+    population;
     region;
     subregion;
     constructor(object?: ICountry) {
         if(object) {
-            this.name = object.name;
-            this.capital = object.capital;
-            this.population = object.population;
             this.area = object.area;
+            this.capital = object.capital;
             this.flag = object.flag;
+            this.name = object.name;
+            this.population = object.population;
             this.region = object.region;
             this.subregion = object.subregion;
         }
@@ -34,8 +34,7 @@ export class Country implements ICountry  {
     }
     public random(apiData: ApiData, index = null) {
         const country = apiData[Object.keys(apiData)[index ?? randomCountryIndex(apiData)]];
-        const { name, capital, population, area, flag, region, subregion } = country;
-        return new Country({name, capital, population, area, flag, region, subregion });
+        return new Country({...country});
     }
 }
 

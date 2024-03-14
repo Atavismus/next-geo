@@ -32,13 +32,13 @@ export class Country implements ICountry  {
     public get<K extends keyof ICountry>(propertyName: K): ICountry[K] {
         return this[propertyName] as ICountry[K];
     }
-    public random(apiData: ApiData, index = null) {
+    public random(apiData: ApiData, index?: number | null) {
         const country = apiData[Object.keys(apiData)[index ?? randomCountryIndex(apiData)]];
         return new Country({...country});
     }
 }
 
-export const randomCountryIndex = (apiData: ApiData) => {
+export const randomCountryIndex = (apiData: ApiData): number => {
     const dataLen = Object.keys(apiData).length;
     return Math.floor(Math.random() * dataLen);
 }

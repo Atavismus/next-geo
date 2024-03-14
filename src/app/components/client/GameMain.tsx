@@ -60,8 +60,7 @@ const GameMain = (props: ApiData) => {
                                     (
                                         
                                         <label htmlFor={`answer-${i}`} className="w-80 m-2 p-2 flex items-center justify-center border-2 border-blue-600 rounded cursor-pointer">
-                                            {/* {getPropValue(country)} */}
-                                            {`${getPropValue(country)} - ${country.get('area')}`}
+                                            {getPropValue(country)}
                                         </label>
                                     )
                                 }

@@ -4,7 +4,7 @@ enum Games {
     capitals = 'capitals',
     regions = 'regions',
     areas = 'areas',
-    population = 'population',
+    populations = 'populations',
 }
 export type ValidGameKeys = typeof Games[keyof typeof Games];
 
@@ -77,6 +77,15 @@ export const gameData:Record<ValidGameKeys, Record<string, IGameVariant>> = {
             sortBy: 'area',
         },
     },
+    populations: {
+        population: {
+            title: "Who is bigger?",
+            searchedProp: 'population',
+            propToDisplay: 'name',
+            question: 'Who is bigger?',
+            sortBy: 'population',
+        },
+    }
 }
 
 export interface IGame {

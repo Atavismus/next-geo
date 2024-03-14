@@ -17,6 +17,7 @@ export interface IGameVariant {
     flagChoices?: boolean;
     propToDisplay?: string | null;// in choices buttons
     uniqBy?: string | null;
+    sortBy?: string | null;
 }
 /**
  * NB: name is the name of the country
@@ -65,6 +66,15 @@ export const gameData:Record<ValidGameKeys, Record<string, IGameVariant>> = {
             question: 'Which subregion is @questionProp@ in?',
             questionProp: 'name',
             uniqBy: 'subregion'
+        },
+    },
+    areas: {
+        area: {
+            title: "Who is bigger?",
+            searchedProp: 'area',
+            propToDisplay: 'name',
+            question: 'Who is bigger?',
+            sortBy: 'area',
         },
     },
 }

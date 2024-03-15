@@ -1,6 +1,6 @@
 'use client'
 import { ApiData } from '@/app/models/ApiData';
-import { Country } from '@/app/models/Country';
+import { Country, ICountry } from '@/app/models/Country';
 import { FlagSize } from '@/app/models/Flag';
 import { FlagPic } from '@/app/components/server/FlagPic';
 import { getRandomCountries } from '@/app/helpers/randomCountries';
@@ -12,10 +12,10 @@ const GameMain = (props: ApiData) => {
     const { question, questionProp, searchedProp, startFlag, flagChoices, propToDisplay, uniqBy, sortBy } = gameInfos;
     const { shuffledCountries, searchedCountry } = getRandomCountries(data, undefined, uniqBy, sortBy);
     const { name: searchedName, flag: searchedFlag } = searchedCountry as Country;
-    const searcedPropValue = sortBy ? 'name' : searchedProp;
-    const rightAnswer =(searchedCountry as Country).get(searcedPropValue);
-    const formattedTitle = question.includes('@questionProp@') ? question.replace('@questionProp@', (searchedCountry as Country).get(questionProp)) : question;
-    const choiceDivClass = flagChoices ? 'choiceFlag relative p-2 flex justify-center' : 'choiceText';
+    const searcedPropValue: string = sortBy ? 'name' : searchedProp;
+    const rightAnswer = (searchedCountry as Country).get(searcedPropValue as keyof ICountry);
+    const formattedTitle: string = question.includes('@questionProp@') ? question.replace('@questionProp@', (searchedCountry as Country).get(questionProp)) : question;
+    const choiceDivClass: string = flagChoices ? 'choiceFlag relative p-2 flex justify-center' : 'choiceText';
     const getPropValue = (country: Country) => {
         return propToDisplay ? country.get(propToDisplay) : country.get(searchedProp);
     }
@@ -33,7 +33,7 @@ const GameMain = (props: ApiData) => {
             <form onSubmit={(e) => handleSubmitAnswer(e, rightAnswer, setResult, setScore)}>
                 <fieldset>
                     {
-                        (shuffledCountries  as Country[]).map((country, i: number) =>
+                        (shuffledCountries as Country[]).map((country, i: number) =>
                             <div key={i} className={choiceDivClass}>
                                 <input
                                     type="radio"

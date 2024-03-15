@@ -98,8 +98,16 @@ body {
 
 /*Choices are text*/
 .choiceText:hover label, .choiceText .radio-fake:checked + label {
-  color: #f2f2f2;
+  color: #ffffff;
   background: var(--blue);
+}
+
+.choiceText:hover label {
+  filter: brightness(1.3);  
+}
+
+.choiceText .radio-fake:checked + label {
+  filter: unset; 
 }
 
 .right .choiceText .radio-fake:checked + label {

@@ -16,11 +16,17 @@ export const setLocalStorage = (prop: string, value: string) => {
     } catch (error) {}
 }
 
-export const manageBestScore = (game: string, variant: string, value: string): string => {
+export const isBestScore = (score: number, storedScore: number) => {
+    return score >= storedScore;
+}
+
+export const manageBestScore = (game: string, variant: string, value: string, setBestScore: Function): boolean => {
     const prop: string = genLocalStorageProp(game, variant);
     const prevValue: string = getLocalStorage(prop);
-    if(parseInt(value) > parseInt(prevValue)) {
-        setLocalStorage(prop, value);    
+    if(isBestScore(parseInt(value), parseInt(prevValue))) {
+        setLocalStorage(prop, value);
+        setBestScore(value);
+        return true;
     }
-    return value;
+    return false;
 } 

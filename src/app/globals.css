@@ -177,23 +177,23 @@ body {
 }
 
 /*Scoring*/
-#score {
+#score, #bestScore {
   animation-fill-mode: forwards!important;  
 }
 
-#score.animToRight {
+#score.animToRight, #bestScore.animToRight {
   animation: animToRight 1000ms;
 }
 
-#score.animToWrong {
+#score.animToWrong, #bestScore.animToWrong {
   animation: animToWrong 1000ms;
 }
 
-#score.resetFromRight {
+#score.resetFromRight, #bestScore.resetFromRight {
   animation: resetFromRight 1000ms;
 }
 
-#score.resetFromWrong {
+#score.resetFromWrong, #bestScore.resetFromWrong {
   animation: resetFromWrong 1000ms;
 }
 

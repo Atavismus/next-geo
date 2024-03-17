@@ -8,7 +8,7 @@ import { handleSubmitAnswer } from '@/app/helpers/handleSubmitAnswer';
 import { CheckIcon } from '@/app/components/server/CheckIcon';
 
 const GameMain = (props: ApiData) => {
-    const { data, setResult, setScore, gameInfos } = props;
+    const { data, score, setResult, setScore, gameInfos, game, variant } = props;
     const { question, questionProp, searchedProp, startFlag, flagChoices, propToDisplay, uniqBy, sortBy } = gameInfos;
     const { shuffledCountries, searchedCountry } = getRandomCountries(data, undefined, uniqBy, sortBy);
     const { name: searchedName, flag: searchedFlag } = searchedCountry as Country;
@@ -30,7 +30,7 @@ const GameMain = (props: ApiData) => {
                     className="mt-3 mb-6"
                 />
             }
-            <form onSubmit={(e) => handleSubmitAnswer(e, rightAnswer, setResult, setScore)}>
+            <form onSubmit={(e) => handleSubmitAnswer(e, rightAnswer?.toString(), score, setResult, setScore, game, variant)}>
                 <fieldset>
                     {
                         (shuffledCountries as Country[]).map((country, i: number) =>

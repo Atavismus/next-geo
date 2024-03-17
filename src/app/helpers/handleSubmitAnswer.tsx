@@ -1,14 +1,20 @@
 import { FormEvent } from "react";
+import { genLocalStorageProp, getLocalStorage, isBestScore } from '@/app/helpers/localStorage';
 
-export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, rightAnswer = '', setResult: Function, setScore: Function) => {
+export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, rightAnswer = '', score: number, setResult: Function, setScore: Function, game: string, variant: string) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const correct = form.answer.value === rightAnswer;
     form.classList.add(correct ? 'right' : 'wrong');
     const submitBtn = document.getElementById('submitBtn') as HTMLInputElement;
-    const score = document.getElementById('score') as HTMLDivElement;
-    score.className = "";
-    score.classList.add(`animTo${correct ? 'Right' : 'Wrong'}`);
+    const scoreEl = document.getElementById('score') as HTMLDivElement;
+    scoreEl.className = "";
+    scoreEl.classList.add(`animTo${correct ? 'Right' : 'Wrong'}`);
+    if(correct && isBestScore(score + 1, parseInt(getLocalStorage(genLocalStorageProp(game, variant))))) {
+        const bestScore = document.getElementById('bestScore') as HTMLDivElement;
+        bestScore.className = "";
+        bestScore.classList.add(`animTo${correct ? 'Right' : 'Wrong'}`);    
+    }
     submitBtn.disabled = true;
     submitBtn.classList.add('disabled');
     setTimeout(() => {

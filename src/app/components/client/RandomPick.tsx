@@ -1,5 +1,5 @@
 'use client'
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { Country } from '../../models/Country';
 import { FlagSize } from '../../models/Flag';
 import { ApiData } from '../../models/ApiData';
@@ -7,12 +7,18 @@ import { FlagPic } from '../server/FlagPic';
 
 const RandomPick = (props: ApiData) => {
     const { data } = props;
-    const [rerender, setRerender] = useState(false);
-    const country = new Country().random(data);
-    const { name, capital, flag, subregion } = country;
+    const [country, setCountry] = useState<Country | null>(null);
+
+    useEffect(() => {
+        setCountry(new Country().random(data));
+    }, [data]);
+
+    const { name, capital, flag, subregion } = country || {};
+
     const handleClick = () => {
-        setRerender(!rerender);
-    }
+        setCountry(new Country().random(data));
+    };
+
     const genAtag = (prop: string): ReactNode => {
         return (
             <a

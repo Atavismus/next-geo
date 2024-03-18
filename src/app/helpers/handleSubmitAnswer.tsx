@@ -22,11 +22,13 @@ export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, rightAnswer = 
         submitBtn.disabled = false;
         submitBtn.classList.remove('disabled');
         setResult(correct);
+        // Mechanic to render a new question even if user fails two in a row
         if(correct) {
-            setScore((prevState:number) => prevState + 1);
+            setScore((prevState:number) => prevState <= 0 ? 1 : prevState + 1);
+
         }
         else {
-            setScore(0);
+            setScore((prevState:number) => prevState <= 0 ? prevState - 1 : 0);
         }
         form.reset();
     }, 1000);

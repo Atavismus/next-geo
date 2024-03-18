@@ -19,7 +19,7 @@ const GameGeneric = (props: ApiData) => {
         <>
             <GameTitle game={game} variant={variant}/>
             <GameMain data={data} setResult={setResult} score={score} setScore={setScore} gameInfos={gameInfos} game={game} variant={variant}/>
-            <GameScore result={result} score={score} game={game} variant={variant}/>
+            <GameScore result={result} score={score >= 0 ? score : 0} game={game} variant={variant}/>
         </>
     );
 }

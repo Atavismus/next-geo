@@ -28,7 +28,7 @@ export default function RootLayout({
           </main>
 
           <footer className="p-5">
-            <p className="text-center">Copyleft 2024 - Made with <a href="https://nextjs.org/" target="blank" className="text-blue-600 cursor-pointer">next.js</a> and <a href="https://countryapi.io/" target="blank" className="text-blue-600 cursor-pointer">countryapi.io</a></p>
+            <p className="text-center">Copyleft 2024 - Made with <a href="https://nextjs.org/" target="_blank" className="text-blue-600 cursor-pointer">next.js</a> and <a href="https://countryapi.io/" target="_blank" className="text-blue-600 cursor-pointer">countryapi.io</a></p>
           </footer>
         </div>
       </body>

@@ -22,7 +22,7 @@ const GameTitle = (props: IGameTitle) => {
     });
     return (
         <>
-            <h2 className="text-center marker text-blue-600 text-5xl font-black small-caps rotate-[-5deg] mt-[5px]"><span className="text-transparent">Fun with </span><Link href="/" className=" cursor-pointer">{gameName}</Link></h2>
+            <h2 className="text-center marker text-blue-600 text-5xl font-black small-caps rotate-[-5deg] mt-[5px]"><span className="text-transparent select-none">Fun with </span><Link href="/" className=" cursor-pointer">{gameName}</Link></h2>
             {/* <h3 className="p-4">Guess the {variant}</h3> */}
         </>
     )

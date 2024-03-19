@@ -56,7 +56,7 @@ const RandomPick = (props: ApiData) => {
                     </div>
                 </div>
             }
-            <div className="pt-5 text-xs text-center cursor-pointer" onClick={handleClick}>(click me!)</div>
+            <div className="pt-5 text-xs text-center select-none cursor-pointer" onClick={handleClick}>(click me!)</div>
         </div>
     );
 }

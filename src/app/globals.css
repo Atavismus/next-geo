@@ -37,6 +37,7 @@ body {
   fill: var(--blue);  
 }
 
+/*List icon*/
 #listIcon span {
   display: block;
   width: 40px;
@@ -101,6 +102,15 @@ body {
   border-bottom-left-radius: 70%;
   border-bottom-right-radius: 70%;
   margin-left: -11px;
+}
+
+table.list tr {
+  border-color: lightgrey;
+}
+
+table.list th, td {
+  padding: 10px;
+  border-color: lightgrey;
 }
 
 #geo {

@@ -21,6 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div id="whiteboard">
           <Link href="/" id="homesweethome" className="absolute top-7 left-7"><HomeIcon /></Link>
+          <Link href="/funwith/list" id="listIcon" className="absolute top-7 right-7"><span></span><span></span><span></span><span></span></Link>
           <header className="mt-10">
             <h1 className="text-center marker text-blue-600 text-5xl font-black small-caps"><Link href="/" className="cursor-pointer"><span className="uppercase text-red-600">Fun</span> with <span id="geo">Geo</span></Link></h1>
           </header>

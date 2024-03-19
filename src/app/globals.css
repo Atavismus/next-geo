@@ -37,6 +37,72 @@ body {
   fill: var(--blue);  
 }
 
+#listIcon span {
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #000000;
+  margin-bottom: 10px;
+  transform: rotate(2deg);
+  border-top-left-radius: 95%;
+  border-top-right-radius: 85%;
+  border-bottom-left-radius: 80%;
+  border-bottom-right-radius: 90%;
+}
+
+#listIcon:hover span {
+  background: var(--blue);
+}
+
+
+#listIcon span:nth-of-type(2) {
+  transform: rotate(-2deg);
+}
+
+#listIcon span:nth-of-type(3) {
+  transform: rotate(1deg);
+}
+
+#listIcon span:nth-of-type(4) {
+  transform: rotate(-2deg);
+}
+
+#listIcon span:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: inherit;
+  border-radius: 100%;
+  margin-top: -1px;
+  margin-left: -11px;
+}
+
+#listIcon span:nth-of-type(2):before {
+  height: 6px;
+  border-top-left-radius: 35%;
+  border-top-right-radius: 57%;
+  border-bottom-left-radius: 70%;
+  border-bottom-right-radius: 60%;
+  margin-left: -10px;
+}
+
+#listIcon span:nth-of-type(3):before {
+  border-top-left-radius: 90%;
+  border-top-right-radius: 80%;
+  border-bottom-left-radius: 80%;
+  border-bottom-right-radius: 90%;
+}
+
+#listIcon span:nth-of-type(4):before {
+  border-top-left-radius: 75%;
+  border-top-right-radius: 75%;
+  border-bottom-left-radius: 70%;
+  border-bottom-right-radius: 70%;
+  margin-left: -11px;
+}
+
 #geo {
   position: relative;
 }

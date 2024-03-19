@@ -96,6 +96,15 @@ body {
   transform: rotate(-2deg);  
 }
 
+/*Location icon*/
+.location path {
+  fill: var(--blue);
+}
+
+.location:hover {
+  filter: brightness(80%)
+}
+
 /*Choices are text*/
 .choiceText:hover label, .choiceText .radio-fake:checked + label {
   color: #ffffff;

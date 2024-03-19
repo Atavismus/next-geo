@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { HomeIcon } from '@/app/components/server/HomeIcon';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div id="whiteboard">
-          <header className="pt-10">
-            <Link href="/"><h1 className="text-center marker text-blue-600 text-5xl font-black small-caps cursor-pointer"><span className="uppercase text-red-600">Fun</span> with <span id="geo">Geo</span></h1></Link>
+          <Link href="/" id="homesweethome" className="absolute top-7 left-7"><HomeIcon /></Link>
+          <header className="mt-10">
+            <h1 className="text-center marker text-blue-600 text-5xl font-black small-caps"><Link href="/" className="cursor-pointer"><span className="uppercase text-red-600">Fun</span> with <span id="geo">Geo</span></Link></h1>
           </header>
 
           <main className="flex min-h-screen flex-col items-center">

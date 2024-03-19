@@ -20,6 +20,23 @@ body {
   font-variant: small-caps;
 }
 
+#whiteboard {
+  background-color: var(--white);
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  margin-top: 5%;
+  border-radius: 5px;
+  border: 10px solid #adb2bd;
+  box-shadow: inset -1px 2px 2px #404040, 6px 9px 1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+#homesweethome:hover path {
+  fill: var(--blue);  
+}
+
 #geo {
   position: relative;
 }
@@ -38,18 +55,6 @@ body {
   border-top-right-radius: 85%;
   border-bottom-left-radius: 79%;
   border-bottom-right-radius: 66%;
-}
-
-#whiteboard {
-  background-color: var(--white);
-  width: 90%;
-  height: 90%;
-  margin: auto;
-  margin-top: 5%;
-  border-radius: 5px;
-  border: 10px solid #adb2bd;
-  box-shadow: inset -1px 2px 2px #404040, 6px 9px 1px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
 }
 
 .game {

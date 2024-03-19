@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { genLocalStorageProp, getLocalStorage, manageBestScore } from '@/app/helpers/localStorage';
+import Link from "next/link";
 interface IGameTitle {
     result: boolean | null;
     score: number;
@@ -26,6 +27,9 @@ const GameScore = (props: IGameTitle) => {
             </div>
             <div id="bestScore">
                 <p className="mt-1 text-lg font-bold">Your best score: {bestScore}</p>
+            </div>
+            <div className="mt-5">
+                <Link href="/" className="text-xs italic text-blue-600 hover:underline cursor-pointer">Traveled enough? Come home!</Link>
             </div>
         </>
     );

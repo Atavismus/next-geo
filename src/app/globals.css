@@ -38,6 +38,10 @@ body {
 }
 
 /*List icon*/
+#listIcon {
+  padding-left: 11px;
+}
+
 #listIcon span {
   display: block;
   width: 40px;

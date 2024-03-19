@@ -1,8 +1,14 @@
 import { ApiData } from "./ApiData";
 
+export enum LocationType {
+    country = "country",
+    capital = "capital"
+}
+export type ValidLocationKeys = typeof LocationType[keyof typeof LocationType];
+
 export interface ILocationData {
-    country?: [number, number];
-    capital?: [number, number];
+    country?: Record<ValidLocationKeys, [number, number]>;
+    capital?: Record<ValidLocationKeys, [number, number]>;
 }
 
 export interface ICountry {
@@ -41,10 +47,10 @@ export class Country implements ICountry  {
         return this[propertyName] as ICountry[K];
     }
     public getLat(): [number, number] | null {
-        return this.latLng?.country ?? null;
+        return (this.latLng as ILocationData & { country: [number, number] }).country ;
     }
     public getCapitalLat(): [number, number] | null {
-        return this.latLng?.capital ?? null;
+        return (this.latLng as ILocationData & { capital: [number, number] }).capital;
     }
     public random(apiData: ApiData, index?: number | null): Country {
         const country = apiData[Object.keys(apiData)[index ?? randomCountryIndex(apiData)]];

@@ -1,10 +1,12 @@
 'use client'
-import { ReactNode, useState, useEffect } from 'react';
-import { Country, LocationType, ILocationData } from '../../models/Country';
-import { FlagSize } from '../../models/Flag';
-import { ApiData } from '../../models/ApiData';
+import { useState, useEffect } from 'react';
+import { Country, LocationType, ILocationData } from '@/app/models/Country';
+import { FlagSize } from '@/app/models/Flag';
+import { ApiData } from '@/app/models/ApiData';
 import { FlagPic } from '../server/FlagPic';
-import { Location } from '@/app/components/server/Location';
+import { WikiLink } from '../server/WikiLink';
+import { genLocation } from '@/app/helpers/genLocation';
+
 
 const RandomPick = (props: ApiData) => {
     const { data } = props;
@@ -20,23 +22,6 @@ const RandomPick = (props: ApiData) => {
         setCountry(new Country().random(data));
     };
 
-    const genAtag = (prop: string): ReactNode => {
-        return (
-            <a
-                href={`https://en.wikipedia.org/wiki/${prop}`}
-                target="blank"
-                className="text-blue-600 italic hover:underline cursor-pointer">
-                {prop}
-            </a>
-        );
-    }
-
-    const genLocation = (prop: LocationType): ReactNode => {
-        return (
-            <Location latLng={latLng as ILocationData} type={prop} className="location inline-block pr-[3px]animate-[locationPing] cursor-pointer"/>
-        );
-    }
-
     return (
         <div className="game border-4 border-blue-600 border-dashed px-12 py-8">
             <div className="pb-5 font-black text-center">Random pick:</div>
@@ -50,9 +35,9 @@ const RandomPick = (props: ApiData) => {
                         />
                     </div>
                     <div>
-                        <p className="pb-1">{genLocation(LocationType.country)}Country: {genAtag(name)}</p>
-                        <p className="pb-1">{genLocation(LocationType.capital)}Capital: {genAtag(capital as string)}</p>
-                        <p>Subregion: {genAtag(subregion as string)}</p>
+                        <p className="pb-1">{genLocation(latLng as ILocationData, LocationType.country)}Country: {<WikiLink prop={name} />}</p>
+                        <p className="pb-1">{genLocation(latLng as ILocationData, LocationType.capital)}Capital: {<WikiLink prop={capital as string} />}</p>
+                        <p>Subregion: {<WikiLink prop={subregion as string} />}</p>
                     </div>
                 </div>
             }

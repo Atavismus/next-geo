@@ -1,17 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 
-:root {
-  --blue: rgb(37, 99, 235);
-  --green: rgb(22, 163, 74);
-  --red: rgb(220, 38, 38);
-  --white: #f2f2f2;
-}
+$blue: rgb(37, 99, 235);
+$green: rgb(22, 163, 74);
+$red: rgb(220, 38, 38);
+$white: #f2f2f2;
 
 body {
-  background: url("../../public/bricks.png") repeat;
+  background: url("/bricks.png") repeat;
   padding-bottom: 5%;
   font-family: "Permanent Marker", cursive!important;
 }
@@ -21,7 +19,7 @@ body {
 }
 
 #whiteboard {
-  background-color: var(--white);
+  background-color: $white;
   width: 90%;
   height: 90%;
   margin: auto;
@@ -34,54 +32,48 @@ body {
 }
 
 #homesweethome:hover path {
-  fill: var(--blue);  
+  fill: $blue;  
 }
 
 /*List icon*/
 #listIcon {
   padding-left: 11px;
-}
-
-#listIcon span {
-  display: block;
-  width: 40px;
-  height: 3px;
-  background: #000000;
-  margin-bottom: 10px;
-  transform: rotate(2deg);
-  border-top-left-radius: 95%;
-  border-top-right-radius: 85%;
-  border-bottom-left-radius: 80%;
-  border-bottom-right-radius: 90%;
-}
-
-#listIcon:hover span {
-  background: var(--blue);
-}
-
-
-#listIcon span:nth-of-type(2) {
-  transform: rotate(-2deg);
-}
-
-#listIcon span:nth-of-type(3) {
-  transform: rotate(1deg);
-}
-
-#listIcon span:nth-of-type(4) {
-  transform: rotate(-2deg);
-}
-
-#listIcon span:before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: inherit;
-  border-radius: 100%;
-  margin-top: -1px;
-  margin-left: -11px;
+  span {
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: #000000;
+    margin-bottom: 10px;
+    transform: rotate(2deg);
+    border-top-left-radius: 95%;
+    border-top-right-radius: 85%;
+    border-bottom-left-radius: 80%;
+    border-bottom-right-radius: 90%;
+    &:nth-of-type(2) {
+      transform: rotate(-2deg);
+    }
+    &:nth-of-type(3) {
+      transform: rotate(1deg);
+    }
+    
+    &:nth-of-type(4) {
+      transform: rotate(-2deg);
+    }
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: inherit;
+      border-radius: 100%;
+      margin-top: -1px;
+      margin-left: -11px;
+    }
+  }
+  &:hover span {
+    background: $blue;  
+  }
 }
 
 #listIcon span:nth-of-type(2):before {
@@ -108,13 +100,14 @@ body {
   margin-left: -11px;
 }
 
-table.list tr {
-  border-color: lightgrey;
-}
-
-table.list th, td {
-  padding: 10px;
-  border-color: lightgrey;
+table.list {
+  tr {
+    border-color: lightgrey;
+  }
+  th, td {
+    padding: 10px;
+    border-color: lightgrey;
+  }
 }
 
 #geo {
@@ -129,7 +122,7 @@ table.list th, td {
   left: -10%;
   width: 120%;
   height: 5px;
-  background-color: var(--red);
+  background-color: $red;
   transform: rotate(175deg);
   border-top-left-radius: 55%;
   border-top-right-radius: 85%;
@@ -182,18 +175,19 @@ table.list th, td {
 }
 
 /*Location icon*/
-.location path {
-  fill: var(--blue);
-}
-
-.location:hover {
-  filter: brightness(80%)
+.location {
+    &:hover {
+      filter: brightness(80%)  
+    }
+    path {
+    fill: $blue;
+  }
 }
 
 /*Choices are text*/
 .choiceText:hover label, .choiceText .radio-fake:checked + label {
   color: #ffffff;
-  background: var(--blue);
+  background: $blue;
 }
 
 .choiceText:hover label {
@@ -205,12 +199,12 @@ table.list th, td {
 }
 
 .right .choiceText .radio-fake:checked + label {
-  background: var(--green);
-  border-color: var(--green);
+  background: $green;
+  border-color: $green;
 }
 .wrong .choiceText .radio-fake:checked + label {
-  background: var(--red);
-  border-color: var(--red);
+  background: $red;
+  border-color: $red;
 }
 
 #submitBtn.disabled, #submitBtn.disabled:hover {
@@ -218,20 +212,20 @@ table.list th, td {
 }
 
 @keyframes animToRight {
-  100%  {color: var(--green);}
+  100%  {color: $green;}
 }
 
 @keyframes animToWrong {
-  100%  {color: var(--red);}
+  100%  {color: $red;}
 }
 
 @keyframes resetFromRight {
-  0%  {color: var(--green);}
+  0%  {color: $green;}
   100%  {color: #000000;}
 }
 
 @keyframes resetFromWrong {
-  0%  {color: var(--red);}
+  0%  {color: $red;}
   100%  {color: #000000;}
 }
 
@@ -256,18 +250,17 @@ table.list th, td {
   stroke: rgb(37 99 235);
 }
 
-.right .check path {
-  stroke: rgb(22 163 74)!important;
-}
-.wrong .check path {
-  stroke: rgb(220 38 38)!important;
-}
-
 .right .check {
   animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1);
+  path {
+    stroke: rgb(22 163 74)!important;
+  }
 }
 .wrong .check {
   animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1);
+  path {
+    stroke: rgb(220 38 38)!important;    
+  }
 }
 
 /*Scoring*/
@@ -289,10 +282,4 @@ table.list th, td {
 
 #score.resetFromWrong, #bestScore.resetFromWrong {
   animation: resetFromWrong 1000ms;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
 }

@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 
 $blue: rgb(37, 99, 235);
 $green: rgb(22, 163, 74);
@@ -11,7 +10,8 @@ $white: #f2f2f2;
 body {
   background: url("/bricks.png") repeat;
   padding-bottom: 5%;
-  font-family: "Permanent Marker", cursive!important;
+  // font-family: "Permanent Marker", cursive!important;
+  font-family: cursive!important;
 }
 
 .small-caps {

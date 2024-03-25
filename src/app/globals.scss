@@ -207,8 +207,9 @@ table.list {
   border-color: $red;
 }
 
-#submitBtn.disabled, #submitBtn.disabled:hover {
+#submitBtn[disabled], #submitBtn[disabled]:hover {
   filter: grayscale(1);
+  cursor: not-allowed;
 }
 
 @keyframes animToRight {

@@ -6,7 +6,6 @@ export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, rightAnswer = 
     const form = e.target as HTMLFormElement;
     const correct = form.answer.value === rightAnswer;
     form.classList.add(correct ? 'right' : 'wrong');
-    const submitBtn = document.getElementById('submitBtn') as HTMLInputElement;
     const scoreEl = document.getElementById('score') as HTMLDivElement;
     scoreEl.className = "";
     scoreEl.classList.add(`animTo${correct ? 'Right' : 'Wrong'}`);
@@ -15,12 +14,9 @@ export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, rightAnswer = 
         bestScore.className = "";
         bestScore.classList.add(`animTo${correct ? 'Right' : 'Wrong'}`);    
     }
-    submitBtn.disabled = true;
-    submitBtn.classList.add('disabled');
+    (document.getElementById('submitBtn') as HTMLInputElement).disabled = true;
     setTimeout(() => {
         form.className = "";
-        submitBtn.disabled = false;
-        submitBtn.classList.remove('disabled');
         setResult(correct);
         // Mechanic to render a new question even if user fails two in a row
         if(correct) {

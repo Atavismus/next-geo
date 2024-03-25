@@ -19,6 +19,9 @@ const GameMain = (props: ApiData) => {
     const getPropValue = (country: Country) => {
         return propToDisplay ? country.get(propToDisplay) : country.get(searchedProp);
     }
+    const enableSubmit = () => {
+        (document.getElementById('submitBtn') as HTMLInputElement).disabled = false;
+    }
     return (
         <>
             <h3 className="m-5 font-black text-2xl"> ~ {formattedTitle} ~</h3>
@@ -41,6 +44,7 @@ const GameMain = (props: ApiData) => {
                                     id={`answer-${i}`}
                                     value={getPropValue(country)}
                                     className="radio-fake hidden"
+                                    onClick={enableSubmit}
                                 />
                                 {
                                     flagChoices ?
@@ -67,7 +71,7 @@ const GameMain = (props: ApiData) => {
                             </div>
                         ) 
                     }
-                    <input id="submitBtn" type="submit" value="Choose" className="block w-40 m-auto mt-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-2 px-4 rounded cursor-pointer" />
+                    <input id="submitBtn" type="submit" value="Choose" disabled className="block w-40 m-auto mt-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-2 px-4 rounded cursor-pointer" />
                 </fieldset>
             </form>
         </>

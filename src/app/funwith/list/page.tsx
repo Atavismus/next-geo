@@ -7,7 +7,7 @@ import { WikiLink } from '@/app/components/server/WikiLink';
 import { genLocation } from '@/app/helpers/genLocation';
 import { formatNumber } from '@/app/helpers/formatNumber';
 
-export default async function Home() {
+export default async function List() {
   const apiData: ApiData = await getData();
   const sortedData: ApiData = Object.values(apiData).sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
   return (

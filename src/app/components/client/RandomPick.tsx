@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, startTransition } from 'react';
 import { Country, LocationType, ILocationData } from '@/app/models/Country';
 import { FlagSize } from '@/app/models/Flag';
 import { ApiData } from '@/app/models/ApiData';
@@ -13,13 +13,22 @@ const RandomPick = (props: ApiData) => {
     const [country, setCountry] = useState<Country | null>(null);
 
     useEffect(() => {
-        setCountry(new Country().random(data));
+        if (data) {
+            // Utiliser startTransition pour rendre la mise à jour asynchrone
+            startTransition(() => {
+                setCountry(new Country().random(data));
+            });
+        }
     }, [data]);
 
     const { name, capital, flag, subregion, latLng } = country || {};
 
     const handleClick = () => {
-        setCountry(new Country().random(data));
+        if (data) {
+            startTransition(() => {
+                setCountry(new Country().random(data));
+            });
+        }
     };
 
     return (

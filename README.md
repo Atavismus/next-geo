@@ -1,5 +1,5 @@
 # next-geo
-Prototype made for testing [Next.js](https://nextjs.org/) and [CountryAPI](https://countryapi.io/).
+Prototype made for testing [Next.js](https://nextjs.org/) and [REST Countries](https://restcountries.com/).
 
 It was bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

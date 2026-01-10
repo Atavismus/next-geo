@@ -2,7 +2,7 @@ export default function ApiError() {
     return (
         <div className="mt-10 p-10 border-4 border-dashed border-red-600 rounded-3xl">
             <p><strong>API Error:</strong></p>
-            <p>That website uses <a href="https://countryapi.io/" target="_blank" className="text-blue-600 cursor-pointer">countryapi.io</a>.</p>
+            <p>That website uses <a href="https://restcountries.com/" target="_blank" className="text-blue-600 cursor-pointer">REST Countries</a>.</p>
             <p>The API service is currently unavailable.</p>
             <p>This could be due to:</p>
             <ul className="list-disc list-inside mt-2 space-y-1">

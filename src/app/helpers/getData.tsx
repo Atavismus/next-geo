@@ -32,7 +32,7 @@ export const getData = async ():Promise<ApiData> => {
         const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT_MS);
 
         // Essayer d'abord sans le paramètre fields, puis avec si nécessaire
-        let apiUrl = API_CONFIG.BASE_URL;
+        let apiUrl: string = API_CONFIG.BASE_URL;
         let res = await fetch(apiUrl, {
             signal: controller.signal,
             next: { revalidate: API_CONFIG.CACHE_REVALIDATE_SECONDS },
@@ -98,7 +98,7 @@ export const getData = async ():Promise<ApiData> => {
                 const countryName = country.name.common;
                 
                 // Construire l'objet latLng si les coordonnées sont disponibles
-                let latLng = undefined;
+                let latLng: { country: [number, number]; capital?: [number, number] } | undefined = undefined;
                 if (country.latlng && Array.isArray(country.latlng) && country.latlng.length === 2) {
                     const [lat, lng] = country.latlng;
                     latLng = {

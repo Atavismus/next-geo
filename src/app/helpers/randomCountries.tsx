@@ -23,13 +23,18 @@ return true;
 import { GAME_CONFIG } from '../constants';
 
 // TODO: deal with difficulty
-export const getRandomCountries = (data:ApiData, difficulty = GAME_CONFIG.DEFAULT_DIFFICULTY, uniqBy = null, sortBy = null): IGetRandomCountries => {
+export const getRandomCountries = (
+    data: ApiData, 
+    difficulty: number = GAME_CONFIG.DEFAULT_DIFFICULTY, 
+    uniqBy: string | null | undefined = null, 
+    sortBy: string | null | undefined = null
+): IGetRandomCountries => {
     const randomCountriesIndex: number[] = [];
     for (let i: number = 0; i < difficulty; i++) {
         let ran: number = randomCountryIndex(data);
         if(randomCountriesIndex.length > 0) {
           if(uniqBy) {
-            while(!isUniqBy(uniqBy, data, randomCountriesIndex, ran)) {
+            while(!isUniqBy(uniqBy as keyof ICountry, data, randomCountriesIndex, ran)) {
               ran = randomCountryIndex(data);
             } 
           }
@@ -52,8 +57,11 @@ export const getRandomCountries = (data:ApiData, difficulty = GAME_CONFIG.DEFAUL
       shuffledCountries: null
     }
     if(sortBy) {
-      randomCountries.sort((a, b) => b[sortBy] - a[sortBy]);
-
+      randomCountries.sort((a, b) => {
+        const aValue = a.get(sortBy as keyof ICountry) as number;
+        const bValue = b.get(sortBy as keyof ICountry) as number;
+        return (bValue ?? 0) - (aValue ?? 0);
+      });
     }
     countries.searchedCountry = randomCountries[0]; 
     countries.shuffledCountries = randomCountries.sort(() => Math.random() - 0.5);

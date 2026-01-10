@@ -11,18 +11,23 @@ import { GameMainProps } from '@/app/types/props';
 const GameMain = (props: GameMainProps) => {
     const { data, score, setResult, setScore, gameInfos, game, variant } = props;
     const { question, questionProp, searchedProp, startFlag, flagChoices, propToDisplay, uniqBy, sortBy } = gameInfos;
-    const { shuffledCountries, searchedCountry } = getRandomCountries(data, undefined, uniqBy, sortBy);
+    const { shuffledCountries, searchedCountry } = getRandomCountries(data, undefined, uniqBy ?? null, sortBy ?? null);
     const { name: searchedName, flag: searchedFlag } = searchedCountry as Country;
     const searchedPropValue: string = sortBy ? 'name' : searchedProp;
     const rightAnswer = (searchedCountry as Country).get(searchedPropValue as keyof ICountry);
-    const formattedTitle: string = question.includes('@questionProp@') ? question.replace('@questionProp@', (searchedCountry as Country).get(questionProp)) : question;
+    const formattedTitle: string = question.includes('@questionProp@') && questionProp 
+        ? question.replace('@questionProp@', String((searchedCountry as Country).get(questionProp as keyof ICountry) ?? '')) 
+        : question;
     const choiceDivClass: string = flagChoices ? 'choiceFlag relative p-2 flex justify-center' : 'choiceText';
     
     const submitButtonRef = useRef<HTMLInputElement>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     
-    const getPropValue = (country: Country) => {
-        return propToDisplay ? country.get(propToDisplay) : country.get(searchedProp);
+    const getPropValue = (country: Country): string => {
+        const value = propToDisplay 
+            ? country.get(propToDisplay as keyof ICountry) 
+            : country.get(searchedProp as keyof ICountry);
+        return String(value ?? '');
     }
     
     const enableSubmit = () => {

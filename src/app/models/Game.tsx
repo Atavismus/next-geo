@@ -1,5 +1,5 @@
 const prefix: string = "Fun with ";
-enum Games {
+export enum Games {
     flags = 'flags',
     capitals = 'capitals',
     regions = 'regions',

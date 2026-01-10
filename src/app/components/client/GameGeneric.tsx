@@ -1,7 +1,7 @@
 'use client'
 import { usePathname } from 'next/navigation';
 import { useState, useMemo } from 'react';
-import { Game, ValidGameKeys } from '../../models/Game';
+import { Game, ValidGameKeys, Games } from '../../models/Game';
 import { GameTitle } from './GameTitle';
 import { GameMain } from './GameMain';
 import { GameScore } from './GameScore';
@@ -16,15 +16,15 @@ const GameGeneric = (props: GameGenericProps) => {
     // Extraire game et variant du pathname de manière sécurisée
     const { game, variant } = useMemo(() => {
         const pathParts = pathname?.split('/') || [];
-        const gameKey = pathParts[2] as ValidGameKeys;
+        const gameKey = pathParts[2];
         const variantKey = pathParts[3] || '';
         
-        // Validation : vérifier que game est un ValidGameKeys
-        const validGames: ValidGameKeys[] = ['flags', 'capitals', 'regions', 'areas', 'populations'];
-        const isValidGame = validGames.includes(gameKey);
+        // Validation : vérifier que game est un ValidGameKeys en utilisant les valeurs de l'enum
+        const validGames = Object.values(Games) as ValidGameKeys[];
+        const isValidGame = validGames.includes(gameKey as ValidGameKeys);
         
         return {
-            game: isValidGame ? gameKey : 'flags' as ValidGameKeys,
+            game: (isValidGame ? (gameKey as ValidGameKeys) : Games.flags) as ValidGameKeys,
             variant: variantKey
         };
     }, [pathname]);

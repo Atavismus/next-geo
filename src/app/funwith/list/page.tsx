@@ -9,7 +9,13 @@ import { formatNumber } from '@/app/helpers/formatNumber';
 
 export default async function List() {
   const apiData: ApiData = await getData();
-  const sortedData: ApiData = Object.values(apiData).sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+  // Convertir en tableau, trier, puis reconstruire l'objet
+  const sortedEntries = Object.entries(apiData).sort(([, a], [, b]) => {
+    const nameA = a.name ?? '';
+    const nameB = b.name ?? '';
+    return nameA.localeCompare(nameB);
+  });
+  const sortedData: ApiData = Object.fromEntries(sortedEntries);
   return (
     <>
         <h2 className="p-5 italic">{Object.keys(apiData).length} countries await you!</h2>
@@ -29,17 +35,25 @@ export default async function List() {
                 Object.values(sortedData).map(({ name, capital, subregion, area, population, latLng, flag }, i) => {
                     return (
                         <tr key={i} className="border-t-2">
-                            <td className="border-r-2">{<WikiLink prop={name} moreClassName="pr-1" />}{genLocation(latLng as ILocationData, LocationType.country)}</td>
-                            <td className="border-r-2">{<WikiLink prop={capital} moreClassName="pr-1" />}{genLocation(latLng as ILocationData, LocationType.capital)}</td>
-                            <td className="border-r-2">{<WikiLink prop={subregion} />}</td>
-                            <td className="border-r-2">{formatNumber(area)}</td>
-                            <td className="border-r-2">{formatNumber(population)}</td>
+                            <td className="border-r-2">
+                                {name && <WikiLink prop={name} moreClassName="pr-1" />}
+                                {latLng && genLocation(latLng, LocationType.country)}
+                            </td>
+                            <td className="border-r-2">
+                                {capital && <WikiLink prop={capital} moreClassName="pr-1" />}
+                                {latLng && genLocation(latLng, LocationType.capital)}
+                            </td>
+                            <td className="border-r-2">{subregion && <WikiLink prop={subregion} />}</td>
+                            <td className="border-r-2">{formatNumber(area ?? 0)}</td>
+                            <td className="border-r-2">{formatNumber(population ?? 0)}</td>
                             <td>
-                                <FlagPic
-                                    size={FlagSize.medium}
-                                    url={flag.medium}
-                                    name={name}
-                                />
+                                {flag?.medium && name && (
+                                    <FlagPic
+                                        size={FlagSize.medium}
+                                        url={flag.medium}
+                                        name={name}
+                                    />
+                                )}
                             </td>
                         </tr>
                     )

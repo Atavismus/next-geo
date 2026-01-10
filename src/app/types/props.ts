@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { ApiData } from '../models/ApiData';
 import { IGameVariant } from '../models/Game';
 import { ValidGameKeys } from '../models/Game';
@@ -7,10 +8,11 @@ export interface GameGenericProps {
     data: ApiData;
 }
 
-export interface GameMainProps extends ApiData {
+export interface GameMainProps {
+    data: ApiData;
     score: number;
-    setResult: (value: boolean | null) => void;
-    setScore: (value: number | ((prev: number) => number)) => void;
+    setResult: Dispatch<SetStateAction<boolean | null>>;
+    setScore: Dispatch<SetStateAction<number>>;
     gameInfos: IGameVariant;
     game: ValidGameKeys;
     variant: string;

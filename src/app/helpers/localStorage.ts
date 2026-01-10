@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export const genLocalStorageProp = (game: string, variant: string): string => {
     return `${game}_${variant}`;
 }
@@ -20,7 +22,7 @@ export const isBestScore = (score: number, storedScore: number) => {
     return score >= storedScore;
 }
 
-export const manageBestScore = (game: string, variant: string, value: string, setBestScore: Function): boolean => {
+export const manageBestScore = (game: string, variant: string, value: string, setBestScore: Dispatch<SetStateAction<string>>): boolean => {
     const prop: string = genLocalStorageProp(game, variant);
     const prevValue: string = getLocalStorage(prop);
     if(isBestScore(parseInt(value), parseInt(prevValue))) {
@@ -29,4 +31,4 @@ export const manageBestScore = (game: string, variant: string, value: string, se
         return true;
     }
     return false;
-} 
+}

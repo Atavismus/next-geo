@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import Link from "next/link";
 import { HomeIcon } from '@/app/components/server/HomeIcon';
+import { ErrorBoundaryWrapper } from '@/app/components/ErrorBoundaryWrapper';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +24,17 @@ export default function RootLayout({
           <Link href="/" id="homesweethome" className="absolute top-7 left-7"><HomeIcon /></Link>
           <Link href="/funwith/list" id="listIcon" className="absolute top-7 right-7"><span></span><span></span><span></span><span></span></Link>
           <header className="mt-10">
-            <h1 className="text-center marker text-blue-600 text-5xl font-black small-caps"><Link href="/" className="cursor-pointer"><span className="uppercase text-red-600">Fun</span> with <span id="geo">Geo</span></Link></h1>
+            <h1 className="text-center marker text-blue-600 text-5xl font-black small-caps">
+                <Link href="/" className="cursor-pointer">
+                    <span className="uppercase text-red-600">Fun</span> with <span id="geo">Geo</span>
+                </Link>
+            </h1>
           </header>
 
           <main className="flex min-h-screen flex-col items-center">
-            {children}
+            <ErrorBoundaryWrapper>
+              {children}
+            </ErrorBoundaryWrapper>
           </main>
 
           <footer className="p-5">

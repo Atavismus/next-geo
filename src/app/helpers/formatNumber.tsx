@@ -1,1 +1,0 @@
-export const formatNumber = (val: number): string => val.toLocaleString('en').replaceAll(',', ' ');

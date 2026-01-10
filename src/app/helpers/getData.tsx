@@ -1,5 +1,7 @@
 import { redirect } from 'next/navigation'
 import { ApiData } from '../models/ApiData';
+import { API_CONFIG } from '../constants';
+import { ApiError, DataTransformationError } from '../utils/errors';
 
 // Interface pour les données REST Countries
 interface RestCountry {
@@ -21,18 +23,19 @@ interface RestCountry {
 
 // Fetch all countries from REST Countries API
 export const getData = async ():Promise<ApiData> => {
-    console.log('Fetching data from REST Countries API...');
+    if (process.env.NODE_ENV === 'development') {
+        console.log('Fetching data from REST Countries API...');
+    }
     try {
         // Ajouter un timeout pour éviter les attentes infinies
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 secondes
+        const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT_MS);
 
-        console.log('Making fetch request to https://restcountries.com/v3.1/all');
         // Essayer d'abord sans le paramètre fields, puis avec si nécessaire
-        let apiUrl = 'https://restcountries.com/v3.1/all';
+        let apiUrl = API_CONFIG.BASE_URL;
         let res = await fetch(apiUrl, {
             signal: controller.signal,
-            next: { revalidate: 3600 }, // Cache pendant 1 heure
+            next: { revalidate: API_CONFIG.CACHE_REVALIDATE_SECONDS },
             headers: {
                 'Accept': 'application/json',
             },
@@ -40,29 +43,28 @@ export const getData = async ():Promise<ApiData> => {
         
         // Si erreur 400, essayer avec le paramètre fields
         if (!res.ok && res.status === 400) {
-            console.log('Trying with fields parameter...');
-            apiUrl = 'https://restcountries.com/v3.1/all?fields=name,capital,flags,area,population,region,subregion,latlng';
+            apiUrl = `${API_CONFIG.BASE_URL}?fields=${API_CONFIG.FIELDS_PARAM}`;
             res = await fetch(apiUrl, {
                 signal: controller.signal,
-                next: { revalidate: 3600 },
+                next: { revalidate: API_CONFIG.CACHE_REVALIDATE_SECONDS },
                 headers: {
                     'Accept': 'application/json',
                 },
             });
         }
 
-        console.log('Fetch response status:', res.status, res.statusText);
-
         clearTimeout(timeoutId);
         
         if (!res.ok) {
             // Récupérer le message d'erreur pour le debug
             const errorText = await res.text();
-            console.error('API Error Response:', {
-                status: res.status,
-                statusText: res.statusText,
-                body: errorText
-            });
+            if (process.env.NODE_ENV === 'development') {
+                console.error('API Error Response:', {
+                    status: res.status,
+                    statusText: res.statusText,
+                    body: errorText
+                });
+            }
             
             // Si erreur 429 (Too Many Requests) → limite atteinte
             if (res.status === 429) {
@@ -73,12 +75,10 @@ export const getData = async ():Promise<ApiData> => {
         }
         
         const countries: RestCountry[] = await res.json();
-        console.log('Received countries count:', countries?.length);
         
         // Vérifier que nous avons reçu des données
         if (!Array.isArray(countries) || countries.length === 0) {
-            console.error('REST Countries API returned invalid data');
-            redirect('/error/');
+            throw new ApiError('REST Countries API returned invalid data', res.status);
         }
         
         // Transformer le tableau en objet pour maintenir la compatibilité avec le code existant
@@ -89,7 +89,9 @@ export const getData = async ():Promise<ApiData> => {
             try {
                 // Vérifier que les propriétés essentielles existent
                 if (!country.name || !country.name.common) {
-                    console.warn('Country missing name.common:', country);
+                    if (process.env.NODE_ENV === 'development') {
+                        console.warn('Country missing name.common:', country);
+                    }
                     return; // Ignorer ce pays
                 }
                 
@@ -126,32 +128,53 @@ export const getData = async ():Promise<ApiData> => {
                     latLng: latLng
                 };
             } catch (countryError) {
-                console.error('Error processing country:', country, countryError);
-                // Continuer avec le pays suivant
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('Error processing country:', country, countryError);
+                }
+                // Continuer avec le pays suivant - on ignore les pays invalides
+                throw new DataTransformationError(
+                    `Failed to transform country data: ${countryError instanceof Error ? countryError.message : 'Unknown error'}`,
+                    country
+                );
             }
         });
         
         // Vérifier que nous avons transformé au moins quelques pays
         const countryCount = Object.keys(transformedData).length;
         if (countryCount === 0) {
-            console.error('No countries were successfully transformed');
-            redirect('/error/');
+            throw new ApiError('No countries were successfully transformed', 500);
         }
         
-        console.log(`Successfully loaded ${countryCount} countries from REST Countries API`);
+        if (process.env.NODE_ENV === 'development') {
+            console.log(`Successfully loaded ${countryCount} countries from REST Countries API`);
+        }
         return transformedData;
     } catch (error: unknown) {
         // Gérer les erreurs réseau (ENOTFOUND, timeout, etc.)
         // Ces erreurs indiquent que l'API n'est pas accessible
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        const errorStack = error instanceof Error ? error.stack : undefined;
-        console.error('Error fetching data from REST Countries:', {
-            message: errorMessage,
-            stack: errorStack,
-            error: error
-        });
+        
+        // Si c'est déjà une ApiError, on la laisse passer
+        if (error instanceof ApiError || error instanceof DataTransformationError) {
+            if (process.env.NODE_ENV === 'development') {
+                console.error('API Error:', error.message, error);
+            }
+            redirect('/error/');
+            return {} as ApiData; // Type assertion pour satisfaire TypeScript
+        }
+        
+        // Autres erreurs (réseau, timeout, etc.)
+        if (process.env.NODE_ENV === 'development') {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            console.error('Error fetching data from REST Countries:', {
+                message: errorMessage,
+                stack: errorStack,
+                error: error
+            });
+        }
         
         // Erreur réseau → API indisponible
         redirect('/error/');
+        return {} as ApiData; // Type assertion pour satisfaire TypeScript
     }
 }

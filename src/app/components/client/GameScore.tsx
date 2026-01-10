@@ -1,31 +1,38 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { genLocalStorageProp, getLocalStorage, manageBestScore } from '@/app/helpers/localStorage';
 import Link from "next/link";
-interface IGameTitle {
-    result: boolean | null;
-    score: number;
-    game: string;
-    variant: string;
-}
-const GameScore = (props: IGameTitle) => {
+import { GameScoreProps } from '@/app/types/props';
+
+const GameScore = (props: GameScoreProps) => {
     // TODO: remove result prop if i don't need (i could need it later)
     const { result, score, game, variant } = props;
-    const [bestScore, setBestScore] = useState(getLocalStorage(genLocalStorageProp(game, variant))); 
+    const [bestScore, setBestScore] = useState<string>(getLocalStorage(genLocalStorageProp(game, variant)));
+    const [scoreClassName, setScoreClassName] = useState<string>('');
+    const [bestScoreClassName, setBestScoreClassName] = useState<string>('');
+    const scoreRef = useRef<HTMLDivElement>(null);
+    const bestScoreRef = useRef<HTMLDivElement>(null);
+    
     useEffect(() => {
-        const scoreEl = document.getElementById("score");
-        scoreEl?.setAttribute("class", scoreEl?.className.replace('animTo', 'resetFrom'));
+        if (scoreRef.current) {
+            const currentClass = scoreRef.current.className.replace('animTo', 'resetFrom');
+            setScoreClassName(currentClass);
+        }
+        
         if(manageBestScore(game, variant, score.toString(), setBestScore)) {
-            const bestScoreEl = document.getElementById("bestScore");
-            bestScoreEl?.setAttribute("class", bestScoreEl?.className.replace('animTo', 'resetFrom'));
+            if (bestScoreRef.current) {
+                const currentClass = bestScoreRef.current.className.replace('animTo', 'resetFrom');
+                setBestScoreClassName(currentClass);
+            }
         }
     }, [score, game, variant]);
+    
     return (
         <>
-            <div id="score">
+            <div ref={scoreRef} id="score" className={scoreClassName}>
                 <p className="mt-4 text-lg font-bold">Your score: {score}</p>
             </div>
-            <div id="bestScore">
+            <div ref={bestScoreRef} id="bestScore" className={bestScoreClassName}>
                 <p className="mt-1 text-lg font-bold">Your best score: {bestScore}</p>
             </div>
             <div className="mt-5">

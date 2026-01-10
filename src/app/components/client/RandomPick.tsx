@@ -2,13 +2,12 @@
 import { useState, useEffect, startTransition } from 'react';
 import { Country, LocationType, ILocationData } from '@/app/models/Country';
 import { FlagSize } from '@/app/models/Flag';
-import { ApiData } from '@/app/models/ApiData';
 import { FlagPic } from '../server/FlagPic';
 import { WikiLink } from '../server/WikiLink';
 import { genLocation } from '@/app/helpers/genLocation';
+import { RandomPickProps } from '@/app/types/props';
 
-
-const RandomPick = (props: ApiData) => {
+const RandomPick = (props: RandomPickProps) => {
     const { data } = props;
     const [country, setCountry] = useState<Country | null>(null);
 

@@ -1,26 +1,34 @@
 'use client'
-import { ApiData } from '@/app/models/ApiData';
+import { useRef, useState } from 'react';
 import { Country, ICountry } from '@/app/models/Country';
 import { FlagSize } from '@/app/models/Flag';
 import { FlagPic } from '@/app/components/server/FlagPic';
 import { getRandomCountries } from '@/app/helpers/randomCountries';
 import { handleSubmitAnswer } from '@/app/helpers/handleSubmitAnswer';
 import { CheckIcon } from '@/app/components/server/CheckIcon';
+import { GameMainProps } from '@/app/types/props';
 
-const GameMain = (props: ApiData) => {
+const GameMain = (props: GameMainProps) => {
     const { data, score, setResult, setScore, gameInfos, game, variant } = props;
     const { question, questionProp, searchedProp, startFlag, flagChoices, propToDisplay, uniqBy, sortBy } = gameInfos;
     const { shuffledCountries, searchedCountry } = getRandomCountries(data, undefined, uniqBy, sortBy);
     const { name: searchedName, flag: searchedFlag } = searchedCountry as Country;
-    const searcedPropValue: string = sortBy ? 'name' : searchedProp;
-    const rightAnswer = (searchedCountry as Country).get(searcedPropValue as keyof ICountry);
+    const searchedPropValue: string = sortBy ? 'name' : searchedProp;
+    const rightAnswer = (searchedCountry as Country).get(searchedPropValue as keyof ICountry);
     const formattedTitle: string = question.includes('@questionProp@') ? question.replace('@questionProp@', (searchedCountry as Country).get(questionProp)) : question;
     const choiceDivClass: string = flagChoices ? 'choiceFlag relative p-2 flex justify-center' : 'choiceText';
+    
+    const submitButtonRef = useRef<HTMLInputElement>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
     const getPropValue = (country: Country) => {
         return propToDisplay ? country.get(propToDisplay) : country.get(searchedProp);
     }
+    
     const enableSubmit = () => {
-        (document.getElementById('submitBtn') as HTMLInputElement).disabled = false;
+        if (submitButtonRef.current) {
+            submitButtonRef.current.disabled = false;
+        }
     }
     return (
         <>
@@ -33,7 +41,19 @@ const GameMain = (props: ApiData) => {
                     className="mt-3 mb-6"
                 />
             }
-            <form onSubmit={(e) => handleSubmitAnswer(e, rightAnswer?.toString(), score, setResult, setScore, game, variant)}>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                const form = e.target as HTMLFormElement;
+                const formData = new FormData(form);
+                const userAnswer = formData.get('answer') as string;
+                const correct = userAnswer === rightAnswer?.toString();
+                
+                if (submitButtonRef.current) {
+                    submitButtonRef.current.disabled = true;
+                }
+                
+                handleSubmitAnswer(e, rightAnswer?.toString(), score, setResult, setScore, game, variant);
+            }}>
                 <fieldset>
                     {
                         (shuffledCountries as Country[]).map((country, i: number) =>
@@ -71,7 +91,14 @@ const GameMain = (props: ApiData) => {
                             </div>
                         ) 
                     }
-                    <input id="submitBtn" type="submit" value="Choose" disabled className="block w-40 m-auto mt-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-2 px-4 rounded cursor-pointer" />
+                    <input 
+                        ref={submitButtonRef}
+                        id="submitBtn" 
+                        type="submit" 
+                        value="Choose" 
+                        disabled={isSubmitting}
+                        className="block w-40 m-auto mt-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-2 px-4 rounded cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" 
+                    />
                 </fieldset>
             </form>
         </>

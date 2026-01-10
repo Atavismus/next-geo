@@ -20,8 +20,10 @@ const isUniqBy = <K extends keyof ICountry>(prop: K, data: ApiData, randomCountr
   }
 return true;
 }
+import { GAME_CONFIG } from '../constants';
+
 // TODO: deal with difficulty
-export const getRandomCountries = (data:ApiData, difficulty = 3, uniqBy = null, sortBy = null): IGetRandomCountries => {
+export const getRandomCountries = (data:ApiData, difficulty = GAME_CONFIG.DEFAULT_DIFFICULTY, uniqBy = null, sortBy = null): IGetRandomCountries => {
     const randomCountriesIndex: number[] = [];
     for (let i: number = 0; i < difficulty; i++) {
         let ran: number = randomCountryIndex(data);

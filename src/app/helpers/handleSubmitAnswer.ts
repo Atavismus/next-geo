@@ -1,7 +1,16 @@
-import { FormEvent } from "react";
-import { genLocalStorageProp, getLocalStorage, isBestScore } from '@/app/helpers/localStorage';
+import { FormEvent, Dispatch, SetStateAction } from "react";
+import { genLocalStorageProp, getLocalStorage, isBestScore } from './localStorage';
+import { GAME_CONFIG } from '@/app/constants';
 
-export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, rightAnswer = '', score: number, setResult: Function, setScore: Function, game: string, variant: string) => {
+export const handleSubmitAnswer = (
+    e: FormEvent<HTMLFormElement>, 
+    rightAnswer = '', 
+    score: number, 
+    setResult: Dispatch<SetStateAction<boolean | null>>, 
+    setScore: Dispatch<SetStateAction<number>>, 
+    game: string, 
+    variant: string
+) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const correct = form.answer.value === rightAnswer;
@@ -27,5 +36,5 @@ export const handleSubmitAnswer = (e: FormEvent<HTMLFormElement>, rightAnswer = 
             setScore((prevState:number) => prevState <= 0 ? prevState - 1 : 0);
         }
         form.reset();
-    }, 1000);
+    }, GAME_CONFIG.ANIMATION_DELAY_MS);
 }
